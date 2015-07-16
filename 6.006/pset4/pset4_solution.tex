@@ -1,0 +1,136 @@
+%
+% 6.006 problem set 4 solutions template
+%
+\documentclass[12pt,twoside]{article}
+
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{amsfonts}
+\usepackage[neverdecrease]{paralist}
+
+\input{macros}
+
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+
+\newcommand{\theproblemsetnum}{4}
+\newcommand{\releasedate}{Thursday, October 16}
+\newcommand{\partaduedate}{Thursday, October 30}
+\newcommand{\tabUnit}{3ex}
+\newcommand{\tabT}{\hspace*{\tabUnit}}
+
+\title{6.006 PSET 4}
+
+\begin{document}
+
+\handout{Problem Set \theproblemsetnum}{Thursday, October 16}
+
+\textbf{All parts are due {\bf \partaduedate} at {\bf 11:59PM}}.
+%
+Please download the .zip archive for this problem set, and refer to the
+\texttt{README.txt} file for instructions on preparing your solutions.
+%
+Remember, your goal is to communicate. Full credit will be given only
+to a correct solution which is described clearly. Convoluted and
+obtuse descriptions might receive low marks, even when they are
+correct. Also, aim for concise solutions, as it will save you time
+spent on write-ups, and also help you conceptualize the key idea of
+the problem.
+
+\setlength{\parindent}{0pt}
+
+\medskip
+
+\hrulefill
+
+\medskip
+
+{\bf Name:} Rishad Rahman
+
+\medskip
+
+{\bf Collaborators:} Cheng Wang
+
+\medskip
+
+\hrulefill
+
+\begin{problems}
+\section*{Part A}
+\problem
+\begin{itemize}
+\item[]
+\begin{itemize}
+\item [\textbf{Solution:} ] Hash the $n$ integers into a table. Set a counter to $0$ and iterate through the list of integers doing the following for each $x$:
+\begin{itemize}
+\item [$\rhd$ ] Compute $7x^{-1} \mod p$ and search for it in the hash table.
+\item [$\rhd$ ] If we hit then we increase the counter by $1$ otherwise do nothing.
+\end{itemize}
+Return the count at the end.
+\end{itemize}
+\begin{itemize}
+\item [\textbf{Correctness:} ] We need to make sure we increment the counter exactly once for every pair $(a,b)$ which satisfies $ab \equiv 7 \mod p$. Since we let $a$ take all the values in the list and check if the \emph{unique} value, by CRT, $b=7a^{-1}\mod p$ was hashed this is precisely what happens. 
+\end{itemize}
+\begin{itemize}
+\item [\textbf{Runtime:} ] The runtime is $O(n)$ since we are hashing $n$ integers and doing $n$ searches and computations each taking $O(1)$.  The space is $O(n)$ since the hash table is of size $m=O(n)$.
+\end{itemize}
+\end{itemize}
+\problem
+\begin{problemparts}
+\problempart
+\begin{itemize}
+\item [\textbf{Solution:} ] For an insertion to take more than $m$ probes, each of the first $m$ probes must have failed at finding an empty slot in the hash table. The probability of finding an empty slot is obviously greater than $\frac{1}{2}$ since we never have more than $n$ of the $2n$ slots filled so we have the probability of colliding on a probe is less than or equal to $\frac{1}{2}$ and the probes are independent so after $m$ probes we have a probability less than or equal to $2^{-m}$ which is an upper bound for any further calculation.
+\end{itemize}
+\problempart
+\begin{itemize}
+\item [\textbf{Solution:} ] Substituting $m=2\log_2 n$ into (a) gives $2^{-2\log_2 n} = \frac{1}{n^2}$.
+\end{itemize}
+\problempart
+\begin{itemize}
+\item [\textbf{Solution:} ] We can subtract the complement so the probability is, where $p_i$ is the probability that more than $2\log_2 n$ probes is taken on insert $i$, $1-\prod (1-p_i)\leq 1-\left(1-\frac{1}{n^2}\right)^n \leq  1-(1-\frac{1}{n})=\frac{1}{n}$ where we have used Bernoulli's Inequality to show $(1-\frac{1}{n^2})^n \geq 1-\frac{1}{n}$.
+\end{itemize}
+\problempart
+\begin{itemize}
+\item [\textbf{Solution:} ] We have 
+\begin{center}
+$\displaystyle \mathbb{E}(X) = \sum_{i=0}^{n} i\cdot p(i) = \sum_{i=0}^{2\log_2 n} i\cdot p(i) + \sum_{i=2\log_2 n + 1}^{n} i\cdot p(i) \leq 2\log_2 n \sum_{i=0}^{2\log n } p(i) + n\sum_{i=2\log_2 n + 1}^{n} p(i) \leq 2\log_2 n + n\cdot \frac{1}{n} = O(\log_2 n)$ 
+\end{center}
+We have used the fact that the sum of probabilities is less than or equal to $1$ for the first part of the summation and that $\sum_{i=2\log_2 n + 1}^{n} p(i) = P(X>2\log_2 n) \leq \frac{1}{n}$ which we showed in (c) for the second part.
+\end{itemize}
+\end{problemparts}
+\problem
+\begin{itemize}
+\item [] 
+\begin{itemize}
+\item [\textbf{Solution:} ] We create an undirected graph of $m+n$ nodes consisting of the $m$ tracks and $n$ participants where an edge connects a node representing a track and a node representing a participant iff the participant has chosen that track. We run a modified version of BFS which runs as follows:
+\begin{itemize} 
+\item[$\rhd$] Arbitrarily choose one of the track nodes as the start node and mark it with $\textsc{Sat}$ then set a variable $d$ to the value $\textsc{Sun}$. 
+\item[$\rhd$] Repeat the following until BFS terminates
+\begin{itemize}
+\item[$\rightarrow$] Every 2 stages/nodes of the BFS we look at the tracks $1$ participant away from the previously searched track (by the construction of the graph all sets of three adjacent nodes are of the form track-participant-track or participant-track-participant but our start node was a track so the former applies) so they cannot be on the same day as the previously searched track. We mark them with the value in $d$ then change $d$ to the opposite day. If a node was already marked we see if it checks with the value in $d$ and if it does not we terminate and return $\textsc{False}$
+\item[$\rightarrow$] If the graph is a union of disjoint graphs then BFS continues starting at a track node on one of the other unexplored graphs (if any)
+\end{itemize}
+\item[$\rhd$] Return $\textsc{True}$
+\end{itemize}
+\end{itemize}
+\begin{itemize}
+\item [\textbf{Correctness:} ] Note that the property we need to keep is that the tracks adjacent to a participant are on different days (if there are two). The algorithm preserves this property as any track following a $\textsc{Sat}$ track and a participant will get a $\textsc{Sun}$ and vice versa since $d$ was changed. Suppose we discovered a node that was already marked $\textsc{Sat}$ and that the value of $d$ is $\textsc{Sun}$. We must have arrived at that node from a participant that followed a track which was marked $\textsc{Sat}$ since that would cause $d$ to be $\textsc{Sun}$ but then that participant would be adjacent to two $\textsc{Sat}$'s which we do not allow so the algorithm returns $\textsc{False}$. Obviously if this never happens we are good so $\textsc{True}$ is returned rightfully if this always passes. Disjoint graphs don't affect this since they translate to different participants with different desired tracks so they are independent.
+\end{itemize}
+\begin{itemize}
+\item [\textbf{Runtime:} ] The number of nodes is $m+n\leq 3n = O(n)$ while the number of edges is less than or equal to $2n=O(n)$ and we are doing $O(1)$ computations at each step of the BFS so the total runtime is $O(n)$.
+\end{itemize}
+\end{itemize}
+\section*{Part B}
+
+\emph{Submit your implemented python script on alg.csail.mit.edu.}
+
+\section*{Part C}
+
+\emph{Indicate whether or not you complete the Piazza poll.}\\ \\
+Completed.
+\end{problems}
+
+\end{document}
