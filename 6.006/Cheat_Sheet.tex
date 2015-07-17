@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage[margin=0.6in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{6.006}
+\rhead{Exam 2}
+\fancyfoot[C]{}
+\setlength{\headsep}{0.05in}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength\parindent{0pt}
+\begin{document}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\underline{Master Theorem}: If $T(n)=aT(\frac{n}{b})+f(n)$ and\\
+\vspace{-5mm} 
+\begin{itemize}
+ \setlength{\itemsep}{1pt}
+\item $f(n)=O(n^{\log_b a-\epsilon})\Rightarrow T(n)=\Theta(n^{\log_b a})$
+\item $f(n)=\Theta(n^{\log_b a}\lg^k n) \Rightarrow T(n) = \Theta(n^{\log_b a} \lg^{k+1} n)$
+\item $f(n)=\Omega (n^{\log_b a +\epsilon})$ and $af(\frac{n}{b})\leq (1-\delta) f(n) \Rightarrow T(n)=\Theta(f(n))$
+\end{itemize}
+\vspace{-1mm}
+\underline{Priority Queue}: Implements a set of elements each associated with a key. Operations are insert, max, extract\_max which pops, and Increase\_key.\\
+\underline{Heap}: Implements a priority queue, takes an array and visualizes it as a nearly complete binary tree. In particular, a max heap will be a useful data structure.
+\vspace{-1mm} 
+\begin{itemize}
+ \setlength{\itemsep}{1pt}
+\item max\_heapify: If left(i) and right(i) are max heaps while $A[i]$ is a violation, then just switch $A[i]$ with the larger continuously so that it trickles down the tree. For a single violation the complexity is $O(\lg n)$ as we may have to trickle down the whole tree.
+\item build\_max\_heap: We can do a similar thing to build, just heapify all the leavers level by level starting from the leaves. Suppose we're $i$ levels above the leaves. We would need $i$ time to trickle down for each node and since there is $\Theta(\frac{n}{2})$ leaves, there are $\frac{n}{2^{i+1}}$ nodes at that level. Thus the total time is $n\sum \frac{i}{2^{i+1}}=\Theta(n)$.
+\end{itemize}
+\vspace{-1mm}
+\underline{Heap Sort}: Build a max heap, extract the max value by switching with last leaf, then max heapify. Complexity is $O(n\lg n)$.\\
+\underline{Binary Search Tree}: Tree with pointers towards parent and child(s). All elements in the left subtree of a node must be smaller than the node element, and in the right greater.
+\vspace{-1mm}
+\begin{itemize}
+\item Insertion is simple, just follow the pointers until a proper placement is found. We can also check if the item is within $"k"$ if some element during insertion. We are basically following a binary search algorithm. You can do the same for finding a value. Minimum/sorting just requires you to follow left pointers.
+\item Computations are centered around the height of the tree $O(h)$
+\end{itemize}
+\vspace{-1mm}
+\underline{Balanced BSTs i.e. AVL}: Makes the trees balanced so $h=O(\lg n)$. The invariant is that subtree heights differ by at most $1$. Inserting an element can restore the invariant by a constant number of rotations.\\
+\underline{Counting Sort}: Sorting $n$ elements into keys ${0, 1, ..., k-1}$ takes $O(n+k)$ and is STABLE (order of elements don't change).
+\vspace{-5mm}
+\begin{itemize}
+\item Making an array of $k$ empty lists takes $O(k)$
+\item Appending each key to the corresponding list in the array takes $O(n)$ time
+\item Output the items into an array takes $O(n+k)$ 
+\end{itemize}
+\vspace{-1mm}
+\underline{Radix Sort}: Do things in base $b$ so there are $d=\log_b k$ digits in ${0,1,..., b-1}$ then count sort on each digit from least significant to most. Each digit takes $O(n+b)$ time so total is $O((n+b)\log_b k)$ which is minimized when $b=n$ to be $O(n\log_n k)=O(n)$ if $k\leq n^c$.\\
+\underline{Hashing}: ADT is dictionaries which are basically sets of key-value pairs. Hashing basically narrows a large set of $n$ keys to a smaller set of $m$ keys i.e. $0$ to $m-1$ using a hash function.
+\vspace{-1mm}
+\begin{itemize}
+\item Good hash functions have a random output in $0,1,...,m-1$
+\item Since collisions can occur, values should be linked lists i.e. resolving collusion via chaining. However if all collide we can have $\Theta(n)$ time for search. Instead we look at the average cost: Let $\alpha=\frac{n}{m}$ be the "load factor" we expect the lists to have a length of $\alpha$ so the running time is $\Theta(1+\alpha)=\Theta(1)$ if $m=\Theta(n)$.
+\item Good hash function ex: $h(k)=[(ak+b)\mod p]\mod m$, $a,b$ random, $p$ large prime so that prob. of collision is less than $\frac{1}{m}$ (\underline{UNIVERSAL HASHING}, $h_{a,b}$ forms a universal family)
+\end{itemize}
+\vspace{-1mm}
+\underline{Table Doubling}: We need to make sure $m=\Theta(n)$ when inserting so table needs to be resized. 
+\vspace{-1mm}
+\begin{itemize}
+\item Idea is to double whenever $\alpha = 1$ but elements have to be rehashed as well
+\item Cost of inserts = cost of inserting + cost of table doubling; the former is $n$ while the latter is $1+2+4+...+n\leq 2n$ so the total cost is less than $3n$ but the amortized cost (per insert) is $\Theta(1)$.
+\end{itemize}
+\vspace{-1mm}
+\underline{Rolling Hash}: If we want to pattern match a desired word of length $m$ in a document of length $n$, matching the characters of the word through the document naively takes $\Theta((n-m)m)=\Theta(nm)$.
+\vspace{-1mm}
+\begin{itemize}
+\item Have a sliding window and cleverly hash as the window slides using the characters as numbers in base $b$ into $q$ keys
+\item $m$ time to initialize the hash of the desired word, window has to slide $n-m$ times, $\frac{n-m}{q}$ expected hits taking $m$ time to verify, and $mv$ time to return $v$ hits, totalling to $\Theta(n+mv)=\Theta(n)$ when $q\geq m$ and $m<< n$.
+\end{itemize}
+\vspace{-1mm}
+\underline{Open Addressing}: What if we want there to be only $1$ element per key? Table doubling is obviously a necessity and typically $\alpha < \frac{1}{2}$. A probing sequence $h(k, i)$ is used
+\vspace{-1mm}
+\begin{itemize}
+\item Prove sequence $h(k,0), h(k,1), h(k,2)...h(k, m-1)$ must be a random permutation of the $m-1$ keys. Uniform hashing is usually assumed so that all permutations are easily likely
+\item A good approximation is double hashing i.e. $h_1 (k) + i h_2(k)\mod m$, where $h_2$ doesn't map to $0$. Linear probing i.e. $h_2(k)=1$ is bad since it leads to clusters.
+\item Search is done by using the probe sequence keys. Insertion is done by using first empty slot in probe sequence. Deletion requires a DEL flag so that search doesn't interpret an empty slot.
+\item Unsuccessful search takes $\sum \alpha^k=\frac{1}{1-\alpha}$ probes on average while successful is around $\frac{1}{n}\displaystyle\sum_{i=0}^{n-1} \frac{m}{m-i}=\sum \frac{\alpha^k}{k+1}=1.4$ for $\alpha=\frac{1}{2}$
+\end{itemize}
+\underline{Graphs}: $V:=$set of vertices, $E:=$set of edges as pairs i.e. $(v,w)$, if directed means $v\rightarrow w$, Adjacency is list of neighbors of each vertex $u\in V$ i.e. $A[u]$ is $u's$ neighbors.
+\vspace{-1mm}
+\begin{itemize}
+\item BFS: Focuses on searching everything at each level i.e. level $i$ consists of vertices reachable in $i$ steps but not fewer. Idea is to store the level of each vertex (so starting vertex initialized to $0$ and the rest to $\infty$), also parents initially point to null, then expand the frontier level by level updating the attributes. Frontier should keep vertices in order visited so that vertices of level $i$ are visited before those of level $i+1$. Complexity is $O(V+E)$ since each vertex is visited at most once and the Adjacency of each vertex is exhausted. BFS finds shortest path as well using parent pointers.
+\item DFS: Focuses on going deep as possible first. Parents initialized to $s:None$
+\begin{itemize}
+\item DFS-visit: starts by visiting the Adjacency of $s$ and if $v\in Adj[s]$ is not in the parent dictionary, then parent[$v$]=$s$  and then $v$ gets visited (remember Adj is forlooped).
+\item DFS: Forloops vertices in $V$, and if it isn't in the parent dictionary then perform DFS-visit on it. DFS also visits every Adj and vertex so it's $O(V+E)$ time.
+\end{itemize}
+\item Edge Classification (DFS): Forward edges points to descendants, back edges point towards ancestors,. and cross edges connect two separate DFS sections. Edges can be classified based on DFS-visit timing. Undirected graphs can only have tree and back edges. 
+\item Cycle Detection: Cycle $\Leftrightarrow$ DFS has back edge. Backwards direction easy but forward direction relies on looking at first vertex visited by DFS.
+\item Topological Sort: Given a Directed Acyclic Graph, perform DFS starting at source vertices (no incoming edges) and record finishing times. Reverse the order i.e. finishing first should come last to get the sort.
+\end{itemize}
+\vspace{-1mm}
+\underline{Shortest Paths}: Each path now has an associated weight $w(p)$, we want the minimum $w(p)$ for each pair of vertices i.e. find $\delta[u, v]$. Note $\delta[u,v]+\delta[v,w]\geq \delta[u,w]$ by Triangle Inequality and we "relax" edges by assigning $d[v]\leftarrow d[u]+w(u,v)$ if $d[v]>d[u]+w(u,v)$. The following algorithms will rely on relaxation.
+\vspace{-1mm}
+\begin{itemize}
+\item DAGs: No negative cycles possible, topologically sort the DAG, then relax each edge coming out of it. Complexity is $\Theta(V+E)$ since each edge and vertex is visited once.
+\item Djikstra: Based on the fact that when using gravity with balls and string length, vertex processing can be seen. No negative cycles. Maintains a set $S$ whose final shortest path weights are determined. Select $u\in V-S$ with shortest path estimate (priority queue), adds it to $S$ and relaxes all edges out of it. In other words if $Q$ is a priority queue, $S\leftarrow \phi$, $Q\leftarrow V[G]$, then while $Q\neq \phi$, $u\leftarrow \text{EXTRACT-MIN} (Q)$. $S\leftarrow S\cup u$, RELAX (decreasing keys) $(u,v,w)$ for all edges $(u,v)\in$ Adj[$u$]. Array has $\Theta(v)$ to find min and $\Theta(1)$ to decrease key so in total we have $\Theta(V^2+E)=\Theta(V^2)$. Min-heap $\Theta(\lg V)$ for extracting min and decreasing key so $\Theta(V\lg V + E\lg V)$. For a Fibonacci Heap same but $\Theta(1)$ amortized for decrease key so optimal is $\Theta(V\lg V + E)$.
+\item Bellman-Ford: Detects negative weight cycles. Makes $|V|-1$ passes and relaxes every edge. This would guarantee shortest paths since every vertex is at max $|V|-1$ segments away from each other unless there is a negative weight cycle. If that were to occur we would be able to still relax an edge so check for relaxation at $|V|$th step and if yes then report negative weight cycle. Complexity is obviously $O(VE)$.
+\item Single-source, single-target: Stop Djikstra once target has been found
+\item Bi-Directional Search: Alternate searching forward from source and backwards from target. Terminates when a vertex is deleted from queue of both searches then find node $x$ such that sum of forward and backward weights is minimized.
+\end{itemize}
+\end{document}
