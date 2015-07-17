@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\setlength\parindent{0pt}
+\begin{document}
+\title{18.100B - Problem Set 5}
+\author{Rishad Rahman}
+\date{}
+\maketitle
+\begin{enumerate}
+\item $\{s_n\}$ converges $\rightarrow \forall \epsilon \ \exists N$ such that $|s-s_n| < \epsilon$ for $n\geq N$. $|s|-|s_n| \leq |s-s_n| < \epsilon$ and $|s_n|-|s| \leq |s_n-s| < \epsilon$ by the Triangle Inequality. Depending on the sign of $|s|-|s_n|$ we can take the absolute value of the corresponding inequality and achieve $||s|-|s_n|| < \epsilon$. So $\{|s_n|\}$ does converge and it converges to $|s|$. The converse is not true; take the sequence $s_n=(-1)^n$ for example, $|s_n| \rightarrow 1$ but $s_n$ has no limit. 
+\\ 
+\item $\displaystyle\lim_{n\rightarrow\infty} \sqrt{n^2+n}-n=\displaystyle\lim_{n\rightarrow\infty}\sqrt{n^2+n}-n\cdot\frac{\sqrt{n^2+n}+n}{\sqrt{n^2+n}+n}=\displaystyle\lim_{n\rightarrow\infty}\frac{n}{\sqrt{n^2+n}+n}=\displaystyle\lim_{n\rightarrow\infty}\frac{1}{\sqrt{1+\frac{1}{n}}+1}=\frac{1}{2}.$ To verify this, note $1+\frac{1}{n}$ is bounded below by $1$ and is monotonically decreasing so $x_n=\frac{1}{\sqrt{1+\frac{1}{n}}+1}$ is bounded above by $\frac{1}{1+1}=\frac{1}{2}$ and is monotonically increasing. This is also the least upper bound since if $x>2$ we can always find $n$ such that $\sqrt{1+\frac{1}{n}}+1<x$.
+\\
+\item First of all $\{s_n\}$ is bounded above by $2$. This is shown by induction. $s_1=\sqrt{2} < 2$ checks. Now assume $s_k < 2\rightarrow s_{k+1}=\sqrt{2+\sqrt{s_k}} < \sqrt{2+\sqrt{2}} < 2$.
+\\
+Now we must show that the sequence is monotonically increasing which we can also do by induction. $s_2=\sqrt{2+\sqrt{s_1}} > \sqrt{2}=s_1$ checks. Now assume $s_k < s_{k+1}$. Then $s_{k+1}=\sqrt{2+\sqrt{s_{k}}}<\sqrt{2+\sqrt{s_{k+1}}}$. But $s_{k+2} = \sqrt{2+\sqrt{s_{k+1}}}$ so $s_{k+2} > s_{k+1}$ and the inductive step is complete.
+\\Since the sequence is monotonic and bounded, it therefore converges.
+\\
+\item Note $s_{2}=0$ and $s_{2m} = \displaystyle\frac{\frac{1}{2}+s_{2m-2}}{2}=\frac{1}{4}+\frac{1}{2}s_{2m-2}$. It is not difficult to see $\displaystyle s_{2m}=\frac{1}{4}+\frac{1}{8}+\frac{1}{16}+...+\frac{1}{2^m}=\frac{1}{2}\cdot\left(1-\left(\frac{1}{2}\right)^{m}\right)=\frac{1}{2}-\left(\frac{1}{2}\right)^{m+1}$. Then $s_{2m+1}=\displaystyle 1-\left(\frac{1}{2}\right)^{m+1}$. Assume $x\neq\frac{1}{2}, 1$. Take $r<\min (|x-\frac{1}{2}|, |x-1|)$. If $x>1$ then $s_n\notin N_r (x)$ since $s_n < 1$ so there cannot be any subsequential limits here. Let us take $\left\{x<1\right\}\backslash \left\{\frac{1}{2}\right\}$. By the Archimedean property we can find $m$ such that $\frac{1}{2}-\left(\frac{1}{2}\right)^{m+1} > x+r $	or $1-\left(\frac{1}{2}\right)^{m+1} > x+r $ with the left inequality corresponding to $x<\frac{1}{2}$ and the right one to $\frac{1}{2}<x<1$. Thus in both these regions the chosen $N_r (x)$ will contain a finite number of points of the sequence since $s_{2m}$ and $s_{2m+1}$ are monotonically increasing and therefore $x$ cannot be a subsequential limit in those regions. $x=\frac{1}{2}$ and $x=1$ are the limits of $s_{2m}$ and $s_{2m+1}$ so they are the subsequential limits. Therefore $\displaystyle\limsup_{n\rightarrow\infty} s_n = 1$ and $\displaystyle\liminf_{n\rightarrow\infty} s_n = \frac{1}{2}$.
+\\
+\setcounter{enumi}{19}
+\item  The convergence of $p_{n_l}$ implies $\forall \epsilon \ \exists N_1$ such that $d(p_{n_l}, p)<\frac{\epsilon}{2}$ for all $n_l>N_1$. Since $\{p_n\}$ is Cauchy, $\forall \epsilon \ \exists N_2$ such that $d(p_n, p_{n_l})<\frac{\epsilon}{2}$ for all $n, n_l > N_2$. Take $N=\max(N_1, N_2)$, then $d(p_n, p) < d(p_n, p_{n_l}) + d(p_{n_l}, p) = \frac{\epsilon}{2}+\frac{\epsilon}{2}=\epsilon$ for all $n>N$. Since $\epsilon$ was arbritrary, this means $p_n \rightarrow p$. 
+\\
+\item If $E=\bigcap_{1}^\infty E_n$ had more than $1$ points, the proof would be a direct copy of the latter half of the proof of 3.10(b) [$\text{diam } E_n \geq \text{diam } E > 0$ which contradicits the limit] so we really only need to show that $E$ is nonempty. Take a sequence $\{x_n\}$ such that $x_n\in E_n$. $\{x_n\}$ is Cauchy (since it is contained within $E_n$ whose diameter goes to 0) and therefore convergent as well since it is in a complete metric space. Let's say $x_n \rightarrow x$, then $x$ must be a limit point of $E=\bigcap_{1}^\infty E_n$ since $d(x, x_n) < \epsilon$ and $x_n \in E_n \ \forall n$. But $E_n$ is closed so $E=\bigcap_{1}^\infty E_n$ is also closed and therefore $x\in E$.
+\\
+\setcounter{enumi}{22}
+\item $\forall \epsilon \ \exists N_1$ such that $d(p_m, p_n)<\frac{\epsilon}{2}$ for $m,n\geq N_1$. Similar for $d(q_m, q_n)$ and let the determining number for that $\frac{\epsilon}{2}$ be $N_2$. Let $N=\max (N_1, N_2)$. By Triangle Inequality $d(p_n, q_n) \le d(p_n, p_m) + d(p_m, q_m) + d(q_m, q_n) \rightarrow d(p_n, q_n) - d(p_m, q_m) < \epsilon$  for $m, n \geq N$. If we computed the inequality focused on $d(p_m, q_m)$ instead we would have gotten $d(p_m, q_m) - d(p_n, q_n) < \epsilon$ so this means $|d(p_n, q_n) - d(p_m, q_m)| < \epsilon$ and therefore we have a Cauchy sequence in $R$ so it converges.
+\end{enumerate}
+\end{document}

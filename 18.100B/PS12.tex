@@ -1,0 +1,53 @@
+\documentclass{article}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\setlength\parindent{0pt}
+\begin{document}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\title{18.100B - Problem Set 12}
+\author{Rishad Rahman}
+\date{}
+\maketitle
+\begin{enumerate}
+\setcounter{enumi}{14}
+\item By equicontinuity $\forall n$ $\forall \epsilon$ $\exists \delta$ s.t. if $0 \leq \gamma < \delta$, $|f_n (\gamma) - f_n (0) | = |f (n\gamma) - f(0) | < \epsilon$. Suppose $n\gamma = x$ where $x$ is arbitrary. Then $\gamma = \frac{x}{n}$ can be made less than $\delta$ for sufficiently large $n$. So $|f(x) - f(0)| < \epsilon$ $\forall\epsilon$ and therefore $f(x) = f(0)$ but note $x$ was arbritrary but needs to be $\geq 0$ for $\gamma \geq 0$ so $f$ is constant on $[0, \infty)$.
+\item Note that $\delta$ balls cover $K$ and since it is compact there must be a finite $k$ number of balls centered at $x_1, x_2, ..., x_k$ which cover $K$. Let's say $\delta$ is chosen such that $|f_n (x) - f_n (y)| < \epsilon$ $\forall n$ and $x, y$ s.t. $d(x,y) < \delta$ which is guaranteed by equicontinuity. Note this also applies to $|f_m (y) - f_m (x)| < \epsilon$. Now note that $f_n (y) \rightarrow f(y)$ so it is Cauchy and therefore $|f_n (y) - f_m (y)| < \epsilon$ for $m,n > N$. Now by Triangle Inequality we get $|f_n (x) - f_m (x)| < 3\epsilon$ for $m, n > N$. By taking $N=\max\{N_k\}$, where $N_k$ is the corresponding $N$ for each $\delta$ neighborhood, we have $|f_n (x) - f_m (x)| < 3\epsilon$ for $m, n > N$ for any $x\in K$. Note the maximimum exists because we have finite $k$. \\
+\setcounter{enumi}{0}
+\item Claim: $\displaystyle\lim_{x\rightarrow 0} \frac{{p(x)}}{q(x)} e^{-\frac{1}{x^2}} = 0$ where $p(x)$ and $q(x)$ are polynomials. This is easily shown by dividing the lowest degree term out of $q(x)$ so that the denominator does not disappear at $0$ but the numerator is now of the form $\sum a_n x^n e^{\frac{-1}{x^2}}$ which converges to 0 for $n$ nonnegative (both terms go to 0) or $n$ positive (exponential dominates as shown by 8.6). \\
+Assume $f^{(n)} (x) = r_n (x) e^{-\frac{1}{x^2}}$ for $x\neq 0$ and where $r_n(x) = \frac{p_n (x)}{q_n (x)}$. $f^{(n+1)} (x) = e^{-\frac{1}{x^2}} (r_{n}'(x)  + \frac{2}{x^3})$. It is trivial that $r_{n}'(x)  + \frac{2}{x^3}$ is also a quotient of polynomials and so we can define $p_{n+1}$, $q_{n+1}$, and $r_{n+1}$. Thus it follows by induction, $r_{0} = 1$, that $f^{(n)} (x) =  r_n (x) e^{-\frac{1}{x^2}}$. Now assume $f^{(n)} (0) = 0$. By the definition of the derivative, $f^{(n+1)} (0) = \displaystyle\lim_{x\rightarrow 0} \frac{r_n (x) e^{-\frac{1}{x^2}} - f^{(n)} (0)}{x-0} = 0$ since $\displaystyle\frac{r_n (x)}{x}$ is a polynomial and we already know $f^{(0)} (0) = f(0) = 0$ so the result follows by induction.\\
+\item $\sum\limits_i \sum\limits_j a_{ij} = -1 + \sum\limits_i (-1 + \sum\limits_{k=1}^{i} \frac{1}{2^k})=-1+\sum\limits_i (-1 + 1-(\frac{1}{2})^i)=-1 + \sum\limits_i -(\frac{1}{2})^i= -1 + -1 = -2$.\\
+$\sum\limits_j \sum\limits_i a_{ij}=\sum\limits_j (-1+\sum\limits_i \frac{1}{2^i}) = \sum\limits_j 0 = 0$.\\
+\setcounter{enumi}{3}
+\item
+Note that because of continuity $x\rightarrow 0$ or $x\rightarrow \infty$ is the same as $cx \rightarrow 0$ or $cx \rightarrow \infty$ where $c$ is a constant. 
+\begin{enumerate}[(a)]
+\item $\displaystyle\lim_{x\rightarrow 0} \frac{b^x-1}{x} = \displaystyle\lim_{x\rightarrow 0} \frac{e^{x\log b}-1}{x}=\log b \displaystyle\lim_{x\rightarrow 0} \frac{e^{x\log b}-e^0}{x\log b - 0} = (e^x)'\bigg|_{x=0} \log b = \log b$\\
+\item $\displaystyle\lim_{x\rightarrow 0} \frac{\log(1+x)}{x} = \displaystyle\lim_{x\rightarrow 1} \frac{\log(x)-\log 1}{x-1} = (\log(x))'\bigg|_{x=1} =1$\\
+\item By (b) $\displaystyle\lim_{x\rightarrow 0} \log (1+x)^{\frac{1}{x}} =1$ so $(1+x)^{\frac{1}{x}}\rightarrow e$. \\
+\item $\displaystyle\lim_{n\rightarrow \infty} \left(1+\frac{x}{n}\right)^n = \displaystyle\lim_{n\rightarrow \infty} \left(\left(1+\frac{1}{\frac{n}{x}}\right)^{\frac{n}{x}}\right)^x=e^x$.
+\end{enumerate}
+\item
+\begin{enumerate}[(a)]
+\item $\displaystyle\lim_{x\rightarrow 0} \frac{e-(1+x)^{1/x}}{x} =\displaystyle\lim_{x\rightarrow 0} \frac{e-e^{\frac{1}{x} \log(1+x)}}{x} =-\displaystyle\lim_{x\rightarrow 0} e^{\frac{1}{x} \log(1+x)} \left(\frac{\frac{x}{x+1}-\log(x+1)}{x^2}\right)$\\
+$=-e \displaystyle\lim_{x\rightarrow 0} \left(\frac{\frac{1}{(x+1)^2}-\frac{1}{1+x}}{2x}\right)=e \displaystyle\lim_{x\rightarrow 0} \left(\frac{1}{2(x+1)^2}\right)=\frac{e}{2}$ where L'Hospital's rule was used repeatedly in the latter half of the calculation.
+\item $\displaystyle\lim_{n\rightarrow \infty} \frac{n}{\log n} (n^{1/n} - 1) = \displaystyle\lim_{n\rightarrow \infty}  \frac{e^{\frac{1}{n}\log n} - 1}{\frac{1}{n}\log n} =\lim_{x\rightarrow 0} \frac{e^x - 1}{x} = (e^x)'\bigg|_{x=0} = 1$.\\
+\item $\displaystyle\lim_{x\rightarrow 0} \frac{\tan x - x}{x(1-\cos x)} = \displaystyle\lim_{x\rightarrow 0}\frac{\sin x - x\cos x}{x \cos x (1-\cos x)} =\displaystyle\lim_{x\rightarrow 0} \frac{\sin x - x\cos x}{x - x \cos x}=\displaystyle\lim_{x\rightarrow 0} \frac{x\sin x}{1 -  \cos x+ x \sin x}$\\
+$=\displaystyle\lim_{x\rightarrow 0} \frac{\sin x + x \cos x}{2\sin x + x \cos x}=\displaystyle\lim_{x\rightarrow 0} \frac{2 \cos x-x\sin x }{3\cos x - x \sin x}=\frac{2}{3}$\\
+\item $\displaystyle\lim_{x\rightarrow 0} \frac{x-\sin x}{\tan x - x} = \displaystyle\lim_{x\rightarrow 0} \frac{x\cos x-\sin x \cos x}{\sin x - x\cos x}=\displaystyle\lim_{x\rightarrow 0} \frac{x-\sin x}{\sin x - x\cos x}=\displaystyle\lim_{x\rightarrow 0} \frac{1-\cos x}{x\sin x}$\\
+$=\displaystyle\lim_{x\rightarrow 0} \frac{\sin x}{\sin x+x\cos x}=\displaystyle\lim_{x\rightarrow 0}\frac{\cos x}{2\cos x- x\sin x}=\frac{1}{2}$.\\
+\end{enumerate}
+\setcounter{enumi}{8}
+\item
+\begin{enumerate}[(a)]
+\item Let $a_n=1+1/2+...+1/n - \log n$. $a_{n+1} \leq a_n \Leftrightarrow 1+1/2+...+1/(n+1) - \log (n+1) \leq 1+1/2+...+1/n - \log n \Leftrightarrow 1/(n+1) \leq \log ((n+1)/n)\Leftrightarrow \left(\frac{n+1}{n}\right)^{n+1} = (1+\frac{1}{n})(1+\frac{1}{n})^n\geq e$. It is easy to see that this is verified since the limit of the LHS is $e$ and we can show that it is monotonically decreasing. Looking at $f(x) = (x+1)\log(1+\frac{1}{x})$, we have $f'(x) = \log(1+\frac{1}{x}) - \frac{1}{x}\leq 0$ since $e^{\frac{1}{x}} \geq 1 +\frac{1}{x}$. \\
+Now let's show $a_n$ is bounded below. $a_n=1+1/2+...+1/n - \log n> \displaystyle\int_{1}^{n+1} \frac{1}{x} dx - \log n = \log(n+1) - \log n > 0$ where we used the upper bound for the integral. \\
+Since $a_n$ is bounded below and monotonically decreasing, its limit exists.
+\item  We have shown $a_n > 0$ so $s_n > \log N$ and $\log N = m\log 10> 100$ when $m > \frac{100}{\log 10} = 43.43$. Dat slow growth. 
+\end{enumerate}
+\end{enumerate}
+\end{document}

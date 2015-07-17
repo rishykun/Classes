@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\setlength\parindent{0pt}
+\begin{document}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\title{18.100B - Problem Set 8}
+\author{Rishad Rahman}
+\date{}
+\maketitle
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Suppose $f(x) \geq f(y)$ with $b>y > x>a$. Then by the Mean Value Theorem there must be an $c\in (x, y)$ s.t. $f'(c) = \frac{f(y) - f(x)}{y-x} \leq 0$, a contradiction since $f'(c) > 0 $, so $f$ must be strictly increasing. Let $f(x) = y$ so that $g(y) = x$. Note the inverse is unique since $f$ is strictly increasing. Then $g'(f(x))=g'(y)=\displaystyle\lim_{t\rightarrow y} \frac{g(y)-g(t)}{y-t}=\lim_{t\rightarrow y}\frac{x-g(t)}{f(x)-f(g(t))}=\lim_{t\rightarrow y}\frac{1}{\frac{f(x)-f(g(t))}{x-g(t)}}$. Now note that as $t\rightarrow y$, $g(t)\rightarrow x$. This is easy to show since $t_1 < t_2 < t_3... < t$ iff $g(t_1) < g(t_2) < g(t_3) ... < g(t)$ since $t_k=f(g(t_k))$ is increasing and 1-1. So $g'(f(x))=\displaystyle\frac{1}{f'(g(y))}=\frac{1}{f'(x)}$. \\
+\setcounter{enumi}{4}
+\item By the Mean Value Theorem, there must be $t\in (x, x+1)$ s.t. $f'(t)=f(x+1)-f(x)=g(x)$. Note as $x\rightarrow +\infty$, $t\rightarrow +\infty $ so $\displaystyle\lim_{t\rightarrow \infty} f'(t) = \displaystyle\lim_{x\rightarrow \infty} g(x)$ but since $t$ is a subsequence of $\mathbb{R}$ that goes to infinity $\displaystyle\lim_{t\rightarrow \infty} f'(t)=\displaystyle\lim_{x\rightarrow \infty} f'(x) =  0$ so $\displaystyle\lim_{x\rightarrow \infty} g(x)=0$. \\
+\setcounter{enumi}{13}
+\item Forward direction: if $f$ is convex, we showed in the last chapter/problem set $\displaystyle\frac{f(t)-f(s)}{t-s} \leq \frac{f(u)-f(t)}{u-t}$ when $t<s<u$. Taking $\lim_{t\rightarrow s}$ we have $f'(s) \leq \displaystyle\frac{f(u)-f(s)}{u-s}$ but taking $\lim_{t\rightarrow u}$ we have $\displaystyle\frac{f(u)-f(s)}{u-s}\leq f'(u)$ so $f'(s) \leq  f'(u)$ when $s < u$ so $f'$ is monotonically increasing. \\
+Backward direction: If $a<x<t<y<b$ By MVT, there must be $\alpha\in(x,t)$ s.t. $f'(\alpha) = \displaystyle\frac{f(t)-f(x)}{t-x}$  and $\beta\in (t, y)$ s.t. $f'(\beta) = \displaystyle\frac{f(y)-f(t)}{y-t}$. Note $\alpha<\beta$ and since $f$ is monotonically increasing, $\displaystyle\frac{f(t)-f(x)}{t-x} \leq \displaystyle\frac{f(y)-f(t)}{y-t}$, rearranging we get $f(t)\displaystyle\left(\frac{y-x}{(t-x)(y-t)}\right)\leq  \frac{f(x)}{t-x}+ \frac{f(y)}{y-t}\Rightarrow f(t)  \leq \frac{y-t}{y-x} f(x)+\frac{t-x}{y-x} f(y)$. Letting $\lambda = \displaystyle \frac{y-t}{y-x} \Rightarrow t=y+(x-y)\lambda=\lambda x + (1-\lambda)y \Rightarrow f(\lambda x + (1-\lambda)y)\leq \lambda f(x) + (1-\lambda)f(y)$. Note $\lambda$ indeed ranges from $0$ to $1$ when $t$ varies in $(x, y)$. \\
+If $f''(x)\geq 0$ for all $x\in(a, b)$, then $f'(x)$ is monotonically increasing and the above follows. If $f$ is convex, then $f'$ is monotonically increasing so $f''(x)\geq 0$. \\
+\item By Taylor's Theorem,\\
+\begin{flalign*}
+f(x+2h) & = f(x)+2h f'(x) + \frac{(2h)^2}{2} f''(\xi)=f(x)+2hf'(x) + 2h^2 f''(\xi) \ \text{for some} \ \xi \in (x, x+2h) &\\
+\Rightarrow f'(x) & =\frac{1}{2h} [f(x+2h)-f(x)]-hf''(\xi) &\\
+\Rightarrow |f'(x)| &= \left|\frac{1}{2h} [f(x+2h)-f(x)]-hf''(\xi)\right| \leq \frac{1}{2h} [|f(x+2h)|+|f(x)|]+h|f''(\xi)|\leq \frac{M_0}{h}+	hM_2
+\end{flalign*}
+Since $M_1$ is the least upper bound of $f'(x)$,\\
+$\displaystyle M_1 \leq \frac{M_0}{h}+hM_2 \Rightarrow h^2 M_2 - hM_1 +M_0 \geq 0$. This should work for all $h$, so we want the discriminant of the quadratic to be $\leq 0$ otherwise we will have a lower bound for $h>0$. Therefore $M_1 ^2 -4M_0 M_2 \leq 0 \Rightarrow M_1^2 \leq 4M_0 M_2$. For the given example $M_0=1$ since $\left|\frac{x^2-1}{x^2+1}\right|=\left|1-\frac{2}{x^2+1}\right|$ and $|2x^2-1|<1$ on $(-1, 0)$. $f'(x) = 4x, \frac{4x}{(x^2+1)^2}$ for $(-1, 0), [0,\infty)$, the former will obviously have larger magnitude since the latter is being divided by a number greater than 1 so $M_1=\sup |4x| = 4$ on $(-1, 0)$. $f''(x) = 4, \frac{4-12x^2}{(x^2+1)^3}$. $|1-3x^2| \leq 1+3x^2 < (x^2+1)^3$ for $x>0$ since $(x^2+1)^3-3x^2-1 = x^6+3x^4 > 0$. So $M_2 = \sup |f''(x)| = 4$.  Note that for all these, the derivatives match at $0$. \\
+\item From the previous problem $M_1^2 \leq 4M_0 M_2$. As $a\rightarrow \infty$, $M_0\rightarrow 0$ since $f\rightarrow 0$, and $M_2$ is bounded so $M_1^2\rightarrow 0 \Rightarrow M_1 \rightarrow 0$ so $\sup |f'(x)| \rightarrow 0 \Rightarrow f'(x) \rightarrow 0$. 
+\end{enumerate}
+\end{document}

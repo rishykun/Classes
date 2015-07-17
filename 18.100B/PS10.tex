@@ -1,0 +1,45 @@
+\documentclass{article}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\setlength\parindent{0pt}
+\begin{document}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\title{18.100B - Problem Set 10}
+\author{Rishad Rahman}
+\date{}
+\maketitle
+\begin{enumerate}
+\setcounter{enumi}{6}
+\item
+\begin{enumerate}[(a)]
+\item $\displaystyle cm_c\leq \int_{0}^{c} f(x) dx \leq cM_c$ where $m_c$ and $M_c$ is the inf and sup on $[0, c]$. This means $\displaystyle cm_c\leq \int_{0}^{1} f(x) dx - \int_{c}^{1} f(x) dx\leq cM_c$ $\forall c$. Taking $c\rightarrow 0$ gives $\displaystyle\int_{0}^{1} f(x) dx - \lim_{c\rightarrow 0} \int_{c}^{1} f(x) dx=0$\\
+\item $f(x) = (-1)^{\lfloor \frac{1}{x} \rfloor + 1} \lfloor \frac{1}{x}\rfloor$ for $x\in (0, 1]$. It is not difficult to see that if $\displaystyle \frac{1}{n+1} \leq c < \frac{1}{n}$ then $\displaystyle \int_{c}^{1} f(x) dx = \frac{1}{n}- c + \sum_{k=1}^{n} (-1)^{k+1} k\left(\frac{1}{k}-\frac{1}{k+1}\right)$, by partitioning $[c, 1]$ with the integer reciprocals in the interval. Note as $c\rightarrow 0$, $n\rightarrow\infty$ so $\displaystyle \lim_{c\rightarrow 0} \int_{c}^{1} f(x) dx = \sum_{k=1}^{\infty} (-1)^{k+1} k\left(\frac{1}{k}-\frac{1}{k+1}\right) = \sum_{k=1}^{\infty} \frac{(-1)^{k+1}}{k+1}$ which converges by the alternating series test but does not converge absolutely, which is what happens when we integrate $|f|$, since then it would be a p-series with $p=1$. 
+\end{enumerate}
+\item Suppose $\displaystyle\sum_{n=1}^{\infty} f(n)$ converges. Partition $[1, b]$ with $x_n= n$ and so that $x_k =\lfloor b\rfloor$. Note $M_n = f(n)$ since $f$ is monotonically decreasing. Then $\displaystyle\int_{1}^{b} f(x) dx \leq M_n \Delta x_n = (b-k)f(k) + \displaystyle\sum_{n=1}^{k-1} f(n)\leq \displaystyle\sum_{n=1}^{k} f(n)$ and since $f\geq 0$, the integral increases as $b$ increases. Since this is bounded and increasing, the limit must exist so $\displaystyle\int_{1}^{\infty} f(x) dx$ converges. The other direction is analogous, we jut have to use $m_n = f(n+1)$ instead and reverse the inequality signs to get $\displaystyle\int_{1}^{\infty} f(x) dx \geq \displaystyle\sum_{n=2}^{\infty} f(n)$ and by the same argument we can conclude that the series converges. \\
+\item Suppose $f, g$ are differentiable and $f',g'\in \mathcal{R}$, then $\displaystyle\int_{0}^\infty f(x) g'(x) dx = \lim_{b\rightarrow\infty} f(b)g(b) - f(0)g(0) - \int_{0}^{b} f'(x) g(x) dx$. Since the function from integration by parts is continuous, we are allowed to take limits provided that they converge using the defintion from the previous problem. Letting $f(x) =\frac{1}{1+x}$ and $g'(x) = \cos x$ we get $\displaystyle\int_{0}^\infty \frac{\cos x}{1+x} dx = \lim_{b\rightarrow\infty} \frac{\sin b}{1+b} - 0 - \displaystyle\int_{0}^\infty \frac{-\sin x}{(1+x)^2} dx=\displaystyle\int_{0}^\infty \frac{\sin x}{(1+x)^2} dx$. The second series absolutely converges by the integral test after using the fact $|\sin x| \leq 1$. The first one does not converge absolutely since it it will be greater than a multiple of the harmonic series, using $x=2\pi N$ as partitions.\\
+\\
+\\
+\\
+\\
+\item 
+\begin{enumerate}[(a)]
+\item By weighted AM-GM $\frac{qu^p+pv^q}{p+q}\geq \sqrt[p+q]{(uv)^{pq}}$ but $p+q=pq$ so this leads to $uv\leq \frac{u^p}{p}+\frac{v^q}{q}$.\\
+\item $\displaystyle\int_{a}^{b} fg d\alpha \leq \int_{a}^{b} \frac{f^p}{p}+\frac{g^q}{q} d\alpha= \frac{1}{p}+\frac{1}{q}=1$. \\
+\item Note $\left|\displaystyle\int_{a}^{b} fg d\alpha\right|\leq \displaystyle\int_{a}^{b} |f||g| d\alpha$. Suppose $c=\displaystyle\int_{a}^{b} |f|^p d\alpha$ and $d=\displaystyle\int_{a}^{b} |g|^q d\alpha$, then if $c,d\neq 0$ $1=\displaystyle\int_{a}^{b} \frac{|f|^p}{c} d\alpha$ and  $1=\displaystyle\int_{a}^{b} \frac{|g|^q}{d} d\alpha$. So by $(b)$, $\displaystyle\int_{a}^{b} \frac{|f||g|}{c^{\frac{1}{p}} d^{\frac{1}{p}}} d\alpha\leq 1$ and the result follows. If either $c$ or $d$ is $0$ this forces either $|f|$ or $|g|$ to be $0$ so the result is trivial.
+\item Assume it doesn't hold for improper integrals. Then we would have LHS $>$ RHS as we approach $0$ or $\infty$. But this would mean there would have to be a neighborhood of $0$ or $\infty$ which this inequality holds and in that case we would have proper integrals and it would would break Holder's Inequality so it must be held for improper integrals as well.
+\end{enumerate}
+\setcounter{enumi}{12}
+\item 
+\begin{enumerate}[(a)]
+\item Setting $t=\sqrt{u}\rightarrow dt = \frac{1}{2\sqrt{u}} du$ gives $\displaystyle f(x) = \int_{x^2}^{(x+1)^2} \frac{\sin u}{2\sqrt{u}} du$. Then setting $g'(u)=\sin u$ and $f(u)=\frac{1}{2\sqrt{u}}$ and using integration by parts, we get $f(x) = \displaystyle -\frac{\cos [(x+1)^2]}{2(x+1)} + \frac{\cos(x^2)}{2x} - \int_{x^2}^{(x+1)^2} \frac{\cos u}{4 u^{\frac{3}{2}}} du$. Since $\cos u \geq -1$, $f(x) < \displaystyle -\frac{\cos [(x+1)^2]}{2(x+1)} + \frac{\cos(x^2)}{2x} + \int_{x^2}^{(x+1)^2} \frac{1}{4 u^{\frac{3}{2}}} du=\displaystyle -\frac{\cos [(x+1)^2]}{2(x+1)} + \frac{\cos(x^2)}{2x} - \frac{1}{2(x+1)}+\frac{1}{2x}$. So $f(x) < \displaystyle\frac{1+\cos(x^2)}{2x} - \frac{1+\cos((x+1)^2)}{2(x+1)}< \frac{1}{x}$ using $-1 \leq \cos t \leq 1$. If we used the fact that $\cos u \leq 1$ we would have gotten $f(x) > \displaystyle\frac{-1+\cos(x^2)}{2x} - \frac{-1+\cos((x+1)^2)}{2(x+1)}> -\frac{1}{x}$ so $|f(x)| < \displaystyle\frac{1}{x}$. Everything is strict since $\cos t$ is never $1$ or $-1$ all the time.
+\item $\displaystyle r(x) = 2x f(x) - \cos(x^2) + \cos[(x+1)^2] = -\frac{x \cos[(x+1)^2]}{x+1}+\cos(x^2) - 2x\int_{x^2}^{(x+1)^2} \frac{\cos u}{4 u^{\frac{3}{2}}} du - \cos (x^2) + \cos[(x+1)^2]=\frac{\cos[(x+1)^2]}{x+1} - 2x\int_{x^2}^{(x+1)^2} \frac{\cos u}{4 u^{\frac{3}{2}}}$. So $\displaystyle|r(x)| < \left|\frac{\cos[(x+1)^2]}{x+1}\right|+\left|-\frac{x}{(x+1)}+1\right|<\frac{1}{x+1}+\frac{1}{x+1} = \frac{2}{x+1} < \frac{2}{x}$.\\
+\item Note $r(x)\rightarrow 0$ so we really just need to look at $\frac{\cos (x^2) - \cos [(x+1)^2]}{2}=\sin \left(x^2+x+\frac{1}{2}\right)\sin\left(x+\frac{1}{2}\right)$. Suppose $x=\sqrt{n\pi}$, $n\in\mathbb{N}$ then the expression turns into $\sin(n\pi+x+\frac{1}{2})\sin(x+\frac{1}{2})=(-1)^n \sin^2(x+\frac{1}{2})$. We want to show $\sqrt{n\pi}+\frac{1}{2}$ gets arbitrarily close to $\frac{\pi}{2}+2\pi m$. Note $n$ can be chosen such that $\sqrt{n\pi}+\frac{1}{2} \leq \frac{\pi}{2}+2\pi m < \sqrt{(n+1)\pi}+\frac{1}{2}$, since after doing operations on the inequality, we will get $n\leq f(m) < n+1$. So $\left|\frac{\pi}{2}+2\pi m-\sqrt{n\pi}-\frac{1}{2}\right|<\sqrt{(n+1)\pi}-\sqrt{n\pi}$ which gets arbitrarily small when $n\rightarrow\infty$, which we could see after rationalizing. Therefore $\sin \left(x^2+x+\frac{1}{2}\right)\sin\left(x+\frac{1}{2}\right)$ gets arbitrarily close to $\pm 1$ and it is obvious it can't go beyond those bounds so the upper limit is $1$ and lower limit is $-1$.\\
+\item $\displaystyle\int_{0}^{N} \sin(t^2) dt =\int_{0}^{1} \sin(t^2) dt+\int_{1}^{N} \sin(t^2) dt=\int_{0}^{1} \sin(t^2) dt+\sum_{k=1}^{N-1} \int_{k}^{k+1} dt \sin (t^2) dt=\int_{0}^{1} \sin(t^2) dt+\sum_{k=1}^{N-1} f(k-1) < \int_{0}^{1} \sin(t^2) dt+\sum_{k=1}^{N-1} \frac{1}{2}\left(\frac{\cos(k^2)-\cos[(k+1)^2]}{k}+\frac{2}{k^2}\right)< \int_{0}^{1} \sin(t^2) dt+\frac{1}{2}\sum_{k=1}^{N-1} \frac{\cos(k^2)}k - \frac{\cos[(k+1)^2]}{k+1} + \frac{2}{k^2}$ Now taking $N\rightarrow\infty$, we see that the integral is bounded above since the first two parts of the series telescope to $\frac{\cos (N^2)}{N} \rightarrow 0$ and the third part is a p-series with $p=2$. We can show it is bounded below using $r(x) > \frac{-2}{x}$, hence the integral converges.
+\end{enumerate}
+\end{enumerate}
+\end{document}

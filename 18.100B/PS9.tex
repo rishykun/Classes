@@ -1,0 +1,51 @@
+\documentclass{article}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\setlength\parindent{0pt}
+\begin{document}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\title{18.100B - Problem Set 9}
+\author{Rishad Rahman}
+\date{}
+\maketitle
+\begin{enumerate}
+\setcounter{enumi}{18}
+\item
+\begin{enumerate}[(a)]
+\item Since $f'(0)$ exists, $\forall\epsilon$ $\exists \delta_1, \delta_2 > 0$ s.t. $\displaystyle\left|\frac{f(\beta_n)-f(0)}{\beta_n} - f'(0) \right| < \epsilon$ when $\beta_n < \delta_1$ and $\displaystyle\left|\frac{f(\alpha_n)-f(0)}{\alpha_n} - f'(0) \right| < \epsilon$ when $\alpha_n > -\delta_2$. Pick $\delta = \min{(\delta_1, \delta_2)}$. Similarly pick $N=\min{(N_1, N_2)}$ so that this is true for all $\alpha_n, \beta_n$ for $n\geq N$ which is guaranteed since the sequences go to $0$. So we have $|f(\beta_n)-f(0)-\beta_n f'(0)| < \beta_n \epsilon$ and $|\alpha_n f'(0)-f(\alpha_n)+f(0)| < -\alpha_n \epsilon$. Adding the two inequalities and using Triangle Inequality gives $|f(\beta_n)-f(\alpha_n)-f'(0)(\beta_n -\alpha_n)|<(\beta_n - \alpha_n)\epsilon$ so $\left|\displaystyle\frac{f(\beta_n)-f(\alpha_n)}{\beta_n-\alpha_n} - f'(0)\right| < \epsilon$. This is true for any arbitrary $\epsilon$ for $n\geq N$ so the limit is $f'(0)$.\\
+\item Following the same steps as the a) but instead since $\alpha_n > 0$ instead we would have $|f(\beta_n)-f(0)-\beta_n f'(0)| < \beta_n \epsilon$ and $|\alpha_n f'(0)-f(\alpha_n)+f(0)| < \alpha_n \epsilon$ so $|f(\beta_n)-f(\alpha_n)-f'(0)(\beta_n -\alpha_n)|<(\beta_n + \alpha_n)\epsilon$. Now $\exists M \ \forall n$ $\displaystyle\frac{\beta_n}{\beta_n-\alpha_n} < M$ so $\beta_n < M(\beta_n-\alpha_n)$ but $\alpha_n < \beta_n$ so $\alpha_n < M(\beta_n - \alpha_n)$ and adding the two gives $\beta_n+\alpha_n < 2M(\beta_n-\alpha_n)$. Therefore $|f(\beta_n)-f(\alpha_n)-f'(0)(\beta_n -\alpha_n)|<2M\epsilon(\beta-\alpha_n)$. This is true for any arbitrary $2M\epsilon$ so by the same steps of the previous problem the limit is also $f'(0)$. \\
+\item $f'$ is continuous so by MVT, $\exists a$ s.t. $|a| < |\alpha_n|$, $\exists b$ s.t. $|b| < |\beta_n|$ $f(\alpha_n)=\alpha_n f'(a) + f(0)$ and $f(\beta_n) = \beta_n f'(b) + f(0)$ and subtracting the two and dividing by $\beta_n-\alpha_n$ gives $\displaystyle\frac{f(\beta_n)-f(\alpha_n)}{\beta_n-\alpha_n} = \frac{\beta_nf'(b) -\alpha_nf'(a)}{\beta_n - \alpha_n}$ But $a,b\rightarrow 0$ as $\beta_n, \alpha_n\rightarrow 0$ so taking $n\rightarrow\infty$ gives the limit as $\frac{\beta_n-\alpha_n}{\beta_n-\alpha_n} f'(0) = f'(0)$. \\
+Let $f(x)=x^2\sin\left(\frac{1}{x}\right)$ for $x\neq 0$ and $f(0) = 0$ so $f'(0) = 0$ but $f'(x) = 2x \sin\left(\frac{1}{x}\right) - \cos\left(\frac{1}{x}\right)$ which obviously isn't continuous at $x=0$. \\
+\end{enumerate}
+\setcounter{enumi}{24}
+\item 
+\begin{enumerate}[(a)]
+\item $x_{n+1}$ is where the tangent to $f(x_n)$ hits the x-axis as $y-f(x_n) = f'(x_n) (x_{n+1} - x_n)$ so if $y=0$ $x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$. \\
+\item $x_1 >\xi$, assume $x_n > \xi$. $\frac{f(x_n) - f(\xi)}{x_n-\xi} \leq f'(x_n)$ by MVT and since $f'$ is monotonically increasing. So $x_{n+1} = x_n -\frac{f(x_n)}{f'(x_n)} \geq \xi$ which is valid since $x_n-\xi > 0$ so this shows $x_n > \xi$ for all $n$. So $f(x_n) > 0$ and since $f' > 0$, $x_{n+1} < x_n$. We have showed $x_n$ is monotonically decreasing and bounded so a limit exists. Taking the limit of both sides yields $L=L-\frac{f(L)}{f'(L)} \Rightarrow f(L) = 0 \Rightarrow L=\xi$. 
+\item $f(\xi) = 0 = f(x_n) + f'(x_n) (\xi - x_n) + \frac{f''(t_n)}{2} (x_n - \xi)^2$ so $(x_n-x_{n+1})f'(x_n)+ f'(x_n) (\xi - x_n) + \frac{f''(t_n)}{2} (x_n - \xi)^2=0\Rightarrow f'(x_n) (x_{n+1}-\xi) = \frac{f''(t_n)}{2} (x_n - \xi)^2$ which leads to the conclusion.
+\item Repeat c) and use the fact $f'' \leq M $ to get $x_{n+1}-\xi \leq \frac{M^{1+2+4+...+2^{n-1}} (x_1 - \xi)^{2^n}}{(2\delta)^{1+2+4+...+2^{n-1}}}=\frac{2\delta}{M}\left[\frac{M (x_1-\xi)}{2\delta}\right]^{2^n}=\frac{1}{A}[A(x_1-\xi)]^{2^n}$\\
+\item $g(x) = x\Rightarrow f(x) = 0 \Rightarrow x=\xi$
+\item $x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} = x_n - 3 x_n^{\frac{1}{3}}\cdot x_n^{\frac{2}{3}}=-2x_n=(-2)^{n-1}x_1$ so $x_n$ does not converge and this does not allow us to find $\xi$.\\
+\\
+\end{enumerate}
+\item $|\frac{f(x)-f(a)}{x-a}| =|\frac{f(x)}{x-a}|\leq M_1$ by MVT and bounds so $|f(x)|\leq M_1 (x-a) \leq M_1 (x_0 - a)\leq A(x_0-a)M_0$ since $M_1 \leq A M_0$. But if $A(x_0 -a) < 1$ then $M_0$ wouldn't be the supremum so for $a<x< x_0 < a+\frac{1}{A}$, the supremum must be $0$ so $f=0$ on that interval. We can easily split our interested interval into partitions smaller than $a+\frac{1}{A}$ so $f$ must be $0$ on the whole interval.\\
+\item Let $f(x)=\phi(x, y_2) - \phi (x, y_1)$, then from 26, $f(x) = 0$ on the interval so $\phi(x, y_2) = \phi(x, y_1)$ so there cannot exist more than one solution. For the given initial-value problem those are the only solutions which can be easily verified through separation of variables and the case when $y=0$.
+\\
+\end{enumerate}
+\begin{enumerate}
+\item It is integrable by Theorem 6.10. The integral is $0$ since it is equal to the lower integral sum which is obviously 0 since every partition contains a point that is not $x_0$ so the infimum is always $0$.
+\item Assume $\exists c\in [a, b]$ s.t. $f(c) = d> 0$. By continuity $\exists \delta$ s.t. if $|x-c| < \delta$ then $|f(x)-f(c)| < \epsilon$ where $\epsilon = \frac{d}{2}$. So on the interval $(c-\delta, c+\delta)$ $f$ is bounded by $f(c)+\frac{d}{2}$ and $f(c)-\frac{d}{2} > 0$ so any partition containing that intersects with $(c-\delta, c+\delta)$ will result in a $f$ having a positive supremum, $M$, on one of the $\Delta x$'s. Since $f\geq 0$ we will have either $0$ or a positive contribution to the integral sum but we have a positive integral sum since $\int f dx=\overline{\int} f dx >0$ which is a contradiction so $f = 0$ on the interval. 
+\item
+\begin{enumerate}[(a)]
+\item Take any partition of $[-1, 1]$ and add $0$ into it if it is not which would result in a refinement. Let's say $x_{n-1} < 0$ and $x_{n} >0$ (shift indices by 1  for $k > n$ if $x_{n} = 0$). Then $\alpha(0)-\alpha(x_{n-1}) = 0$ and $\alpha(x_{n}) - \alpha(0) = 1$. So $U(P, f, \alpha) = M(0, x_{n})$ and $L(P, f, \alpha) = m(0, x_{n})$. Let $0 < x_{n_{1}} < x_{n}$ so that we have a refinement of $P$, $P_{1}^*$ when $x_{n_{1}}$ is added. $\alpha(x_{n}) - \alpha(x_{n_{1}}) = 1-1=0$ so $U(P_{1}^*, f, \alpha) = M(0, x_{n_1})$ and $L(P, f, \alpha) = m(0, x_{n_1})$. By similar construction $U(P_{k}^*, f, \alpha) = M(0, x_{n_k})$ and $L(P, f, \alpha) = m(0, x_{n_k})$. So taking $k\rightarrow\infty$, $x_{n_k}\rightarrow 0+$ so $\overline{\int}f d\alpha = M(0, 0+)$ and $\underline{\int} f d\alpha = m(0, 0+)$. If $f(0)=f(0+)$ then $\overline{\int}f d\alpha=\underline{\int}f d\alpha=M(0, 0+) = m(0, 0+) = f(0)$ so $f\in\mathcal{R}(\beta_1)$ and $\int f d\alpha =f(0)$. If $f(0+) \neq f(0)$ then we would have one as a max which results in $\overline{\int}f d\alpha$ and the other one as a min which results in $\underline{\int} f d\alpha$ and they wouldn't be equal so $f$ wouldn't be integrable and that proves the reverse direction.\\
+\item $f\in\mathcal{R}(\beta_2) \Leftrightarrow f(0-) = f(0)$. The argument is almost identical to the previous solution except that we have $U(P_{k}^*, f, \alpha) = M( x_{n_k}, 0)$ and $L(P, f, \alpha) = m( x_{n_k}, 0)$ since $\Delta \alpha = 0$ if $x_{n-1},x_{n} > 0$ but $1$ if $x_{n-1} < 0$ and $x_{n}=0$ so we would be dealing with $f(0)$ and $f(0-)$ instead and the reasoning is analogous.\\
+\item Here we have $U(P_{k}^*, f, \alpha) = \frac{1}{2}(M(x_{{n-1}_k}, 0) + M(0, x_{n_k}))$ and $L(P_{k}^*, f, \alpha) = \frac{1}{2}(m(x_{{n-1}_k}, 0) + m(0, x_{n_k}))$. Taking limits we have $\overline{\int}f d\alpha = \frac{1}{2} (M(0-, 0) + M(0, 0+))$ and $\underline{\int}f d\alpha = \frac{1}{2} (m(0-, 0) + m(0, 0+))$. If $f$ is continuous then $f(0) = f(0-) = f(0+)$ so $\overline{\int}f d\alpha = \underline{\int}f d\alpha = f(0)$ so $f\in\mathcal{R}(\beta_3)$. If $f$ was not continuous then by the same argument as the previous parts we would have unique maximum and minimums so the upper and lower sums wouldn't agree. We would need $M(0-, 0) + M(0, 0+) = m(0-, 0) + m(0, 0+)$ or $M(0-, 0) - m(0-, 0) = m(0, 0+) - M(0, 0+)$ Obviously the left is non-negative and the right is non-positive so they both equal $0$ so $M(0-, 0) = m(0-, 0)$. If $f(0-)\neq f(0)$ then this would not be possible and analogously for $M(0+, 0) = m(0+, 0)$ except with $f(0+)$ so $f$ must be continuous. \\
+\item If $f$ is continuous, $f(0) = f(0-) = f(0+)$ so the conditions to a), b) are satisfied and we already showed in c) that the integral resolves to $f(0)$ so $\int f d\alpha = f(0)$ for $\alpha = \beta_1, \beta_2, \beta_3$. 
+\end{enumerate}
+\end{enumerate}
+\end{document}
