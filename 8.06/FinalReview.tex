@@ -1,0 +1,363 @@
+\documentclass{article}
+\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\newcommand{\mktitle}[1]{\title{#1} \author{Rishad Rahman} \date{} \maketitle}
+\newcommand{\bra}[1]{\left\langle #1 \right|}
+\newcommand{\ket}[1]{\left|#1\right\rangle}
+\newcommand{\braket}[2]{\left\langle#1 |  #2\right\rangle}
+\newtheorem{thm}{Theorem}
+
+\begin{document}
+
+\mktitle{8.06: Quantum Physics III} 
+
+\section{Time-independent perturbation theory}
+\subsection{Non-degenerate}
+Let the unperturbed hamiltonian be $H^0$ such that the eigensystem takes the following form
+$$ H^0 \ket{n^0} = E^0_n \ket{n^0} \ \ \ n = 0,1,2, \cdots \ \ \ E^0_n \neq E^0_m \ \ \ \forall \ n\neq m$$
+Our perturbed hamiltonian is of the form $H=H^0+\delta H$ and we denote its eigensystem with 
+$$ H \ket{n} = E_n \ket{n} \ \ \ n = 0,1,2, \cdots \ \ \ \ket{n}=\ket{n^0} + \ket{\delta n}$$
+Instead of the usual normalization requirement that $\braket{n}{n}=1$ we will instead require that $\braket{n^0}{\delta n} = 0$.
+\begin{proof}
+Knowing there exists normalized eigenstates of the form $\ket{n}$  we scale each so that our new eigenstates are of the form $\ket{N} = c_n\ket{n}$. Then we let $$\braket{n^0}{\delta N} = c_n\braket{n^0}{n} - \braket{n^0}{n^0} = 0$$ $$ \Rightarrow c_n = \frac{1}{\braket{n^0}{n}} = \frac{1}{1+\braket{n^0}{\delta n}}$$
+\end{proof} \noindent
+So if our new basis states take the form $\ket{n}$ [which was $\ket{N}$ in our proof], then we have the normalization factor $$\braket{n}{n} = \braket{n^0}{n^0} + \braket{n^0}{\delta n}+\braket{\delta n}{n^0} + \braket{\delta n}{\delta n} = 1+\braket{\delta n}{\delta n}$$
+Now let us proceed to the main result. We have that $$\bra{n^0} \delta H \ket{n} = E_n \braket{n^0}{n} -  E_n^0 \braket{n^0}{n} = E_n - E_n^0 $$ $$\Rightarrow E_n = E_n^0 + \bra{n^0}{\delta H}\ket{n}$$
+$$\bra{m^0} \delta H \ket{n} = E_n \braket{m^0}{n} -  E_m^0 \braket{m^0}{n} = (E_n-E_m^0)\braket{m^0}{\delta n}
+$$ $$\Rightarrow \braket{m^0}{\delta n} = \frac{\bra{m^0} \delta H \ket{n}}{E_n - E_m^0}$$
+We keep higher orders iteratively by reducing $\ket{n}$ to $\ket{n^0}$ and $E_n$ to $E_n^0$ when necessary. It is easy to see that the first order shift of the energies and wavefunctions are thus
+\begin{equation} \boxed{\delta E_n^1 = \bra{n^0} \delta H \ket{n^0} \quad \text{and} \quad \ket{\delta n^1} = \sum_{m\neq n} \frac{\bra{m^0} \delta H \ket{n^0}}{E_n^0 - E^0_m}\ket{m^0}}
+\end{equation}
+Now we proceed to the second order shift in energy which considers the $\ket{\delta n}$ we neglected in the first order calculation so $\delta E_n - E_n^1 = \bra{n^0} \delta H \ket{\delta n}$, and the approximation is found by applying $(1)$
+\begin{equation}
+\boxed{\ket{\delta E_n^2} = \sum_{m\neq n} \frac{|\delta H_{mn}|^2}{E_n^0-E_m^0}}
+\end{equation}
+We can also readily see that both the first and second order approximations always \emph{over}-approximates the true ground state energy. For the approximation to be valid we want the perturbed energies to be smaller than the original energies $\rightarrow \boxed{\delta H_{nn} << E_n^0}$.
+\subsection{Degenerate}
+If $E_n^0 = E_m^0$ and $n\neq m$ equation (2) leads us to problems. To resolve this, we choose a ``good'' basis, where $\delta H_{mn} = 0$ if $E_m = E_n$ and $m\neq n$. This corresponds to having diagonal blocks whose sizes depend on eigenvalue degeneracy. One can proceed with non-degenerate perturbation theory afterwards.
+\section{WKB}
+\subsection{Semi-classical Phase Approximation}
+We note that a wavefunction may be expressed as $\psi(x)=|\psi(x)|\exp\left(i\frac{S(x)}{\hbar}\right)$ which leads us to the expansion
+$$S(x) = \sigma_0 + \hbar \sigma_1 + \hbar^2 \sigma_2 + ... $$
+If we substitute this into the Schrodinger Equation and equate orders of $\hbar$
+$$\left(\frac{d \sigma_0}{dx}\right)^2 =2m (E-V(x)) = [p(x)]^2 \rightarrow\sigma_0 =  \pm \int^x_{x_0} p(x') dx' $$
+$$\frac{ d \sigma_1}{dx} = \frac{i}{2} \frac{\frac{d^2 \sigma_0}{dx^2}}{\frac{d\sigma_0}{dx}}=\frac{i}{2}\frac{d}{dx}\ln p(x)\rightarrow \sigma_1 = \frac{i}{2}\ln p(x) + C$$
+Taking into account constant factors we get our approximation formula
+\begin{equation}
+\boxed{\psi(x) = \frac{A}{\sqrt{p(x)}} \exp\left(\frac{i}{\hbar}\int_{x_0}^{x} p(x') dx' \right) + \frac{B}{\sqrt{p(x)}} \exp\left(-\frac{i}{\hbar}\int_{x_0}^{x} p(x') dx' \right)}
+\end{equation}
+\begin{equation}
+\boxed{\psi(x) = \frac{C}{\sqrt{\kappa(x)}} \exp\left(\frac{1}{\hbar}\int_{x_0}^{x} \kappa(x') dx' \right) + \frac{D}{\sqrt{\kappa(x)}} \exp\left(-\frac{1}{\hbar}\int_{x_0}^{x} \kappa(x') dx' \right)}
+\end{equation}
+where (3) refers to solutions in allowed regions, and (4) forbidden regions. A natural question to ask now is when it is valid, and why we refer to it as semi-classical. We we want to suppress the perturbation effects so we require $|\hbar \frac{\sigma_1}{\sigma_0}| \ll 1$ but we will enforce the constraint on the derivative instead as constants are irrelevant.
+This eventually leads us to the condition $\boxed{\frac{d}{dx} \lambda(x) \ll 1}$ where $\lambda(x)=\left|\frac{\hbar}{p(x)}\right|$. 
+\subsection{Connection formulae}
+We see that WKB is invalid near $p(x) = 0$. To account for this, we match both sides to some airy function, the solution to the linear potential approximation at the point where transition from allowed to forbidden region occurs. The following equation models allowed on left, and $a$ is the transition point
+\begin{equation}
+\boxed{
+\psi(x<a) = \frac{2A}{\sqrt{p(x)}}\sin\left(\frac{1}{\hbar} \int_{x}^{a} p(x') dx' + \frac{\pi}{4}\right)+\frac{B}{\sqrt{p(x)}}\cos\left(\frac{1}{\hbar} \int_{x}^{a} p(x') dx' + \frac{\pi}{4}\right)
+}
+\end{equation}
+\begin{equation}
+\boxed{
+\psi(x>a) = \frac{A}{\sqrt{\kappa(x)}}\exp\left(-\frac{1}{\hbar} \int_{a}^{x} \kappa(x') dx' \right)+\frac{B}{\sqrt{\kappa(x)}}\exp\left(\frac{1}{\hbar} \int_{a}^{x} \kappa(x') dx' \right)
+}
+\end{equation}
+
+Allowed on right, forbidden on left connection follows from reversing the order of the equations above and the limits of the integrals. We note that in (6) knowing that we have a bound state lets us apply $B=0$ which makes the equations simpler and derive some neat results such as the Bohr-Sommerfeld Quantization discussed below.
+\subsection{Bohr-Sommerfeld Quantization}
+We can apply the WKB approximation to approximate allowed energies. If we let $k = \text{\# of soft walls}$ then the condition is 
+\begin{equation}
+\boxed{\int_a^b p(x) dx = \left(n-\frac{k}{4}\right)\pi}
+\end{equation}
+which is easy to derive when hard walls are involved, but when both sides are soft walls it can be done by equating the connection formula for $x>a$ and $x<b$.
+\subsection{Tunneling}
+The transmission probability can be calculated to be about $\exp\left(-\frac{2}{h} \int_a^b \kappa(x) dx\right)$ and the period is $\tau=2\int_a^b m\frac{dx}{p(x)}$ so the lifetime is around
+\begin{equation}
+\boxed{2m\int_a^b \frac{dx}{p(x)}\exp\left(\frac{2}{h}\int_b^c \kappa(x) dx\right)}
+\end{equation}
+\section{Time-dependent perturbation theory}
+\subsection{Rotating the frame}
+We will express $\psi$ at time $t$ in terms of the eigenstates at some original time i.e. $0$ or $-\infty$
+$$\ket{\psi(t)} = \sum_{n} c_n(t) e^{-\frac{iE_n t}{h}} \ket{n}$$
+If we plug this into the Schrodinger equation we get the system of differential equations
+\begin{equation}
+\boxed{
+i\hbar \dot{c_m} (t) =\sum_n e^{i\omega_{mn} t} \delta H_{mn} c_n(t)}
+\end{equation}
+where $\omega_{mn} = \frac{E_m-E_n}{\hbar}$. For the purpose of a simpler expression, we will instead approximate $\ket{\widetilde{\psi}(t)} = e^{\frac{iH_0 t}{\hbar}} \ket{\psi(t)} =$
+It is not difficult to see that this satisfies the Schrodinger equation in the rotated frame $i\hbar \frac{d}{dt}\ket{\widetilde{\psi}(t)} = \widetilde{\delta H}(t) \ket{\widetilde{\psi}(t)}$ where $ \widetilde{\delta H} = e^{\frac{i H_0t}{\hbar}} \delta H(t)  e^{-\frac{i H_0t}{\hbar}}$. Then the 1st wavefunction correction is given by 
+\begin{equation}
+\boxed{
+\ket{\widetilde{\psi}^1 (t)} = \int_0^t dt' \frac{\widetilde{\delta H}(t')}{i\hbar}\ket{\psi(0)}
+}
+\end{equation}
+We can also formulate a \emph{transition probability} from state $\ket{n}$ to $\ket{m}$ as follows
+\begin{equation}
+P_{n\rightarrow m} = \left|\int_0^t dt'\frac{\delta H_{mn} (t') e^{i\omega_{mn} t'}}{i\hbar}\right|^2
+\end{equation}
+\subsection{Periodic perturbations}
+Periodic perturbations deal with $\delta H(t) = V\cos(\omega t)$. The transition rates are significant in that they can be approximated by the following form (where $\alpha = \omega_{mn} - \omega$)
+\begin{equation}
+\boxed{
+P_{n\rightarrow m} (t) = \frac{|V_{mn}|^2}{\hbar^2}\frac{\sin^2 (\frac{\alpha t}{2})}{\alpha^2}
+}
+\end{equation}
+A detailed calculation for large $t$ shows that the transition rate per unit time turns into
+$$R_{n\rightarrow m} (t) =\frac{\pi}{2} \frac{|V_{mn}|^2}{\hbar^2}\delta(|\omega_{mn}|-\omega))$$
+Note that transitions only occur if $V{mn} \neq 0$, which we call a \emph{selection rule}. This greatly reduces the number of possible transitions in say a Hydrogen atom under the influence of an electric field. On a general state, if we are under the influence of a polarized electric field (i.e. light) $E(\vec{r}) =E_0\hat{z}\cos(wt)$ then we can say $\delta H (t) =eE_0 z\cos(\omega t)$. We can calculate the contributions to the transmission per unit time easily but we note that this occurs (for large $t$) at $\omega_{mn} =\pm \omega$ corresponding to absorption and stimulated emission. 
+\subsection{Incoherent light}
+Averaging over all spatial coordinates on unpolarized light we get that $\bra{}V_{mn}\ket{^2}_{\hat{n}} = \frac{E_0^2}{3} |\vec{d_{mn}}|^2$ where $d$ is the dipole moment operator. If we substitute $E_0^2 = 8\pi U(\omega)$ (follows from E-field density with natural/CGS units) and integrate we get Fermi's Golden Rule
+\begin{equation}
+\boxed{
+R_{n\rightarrow m} = \int d\omega U(\omega) \frac{4\pi^2}{3\hbar^2} |\vec{d_{mn}}|^2 \delta(\omega-|\omega_{mn}|) =  \frac{4\pi^2}{3\hbar^2} |\vec{d_{mn}}|^2 U(\omega_{mn})
+}
+\end{equation}
+\subsection{Spontaneous emission}
+Using the black-body radiation spectrum $U(\omega) = \frac{\hbar}{\pi^2 c^3} \frac{\omega^3}{e^{\beta\hbar\omega}-1}$, we can observe certain transition rates at an equilibrium temperature. If if the absorption, spontaneous emission, and stimulated emission rates are $B_{ab}N_aU(\omega_{ba})$, $AN_b$, $B_{ba} N_b U(\omega_{ba})$ respectively an argument by Einstein which involves matching coefficients with the black-body spectrum and Fermi's Golden Rule shows that
+$$B_{ab}=B_{ba} =\frac{4\pi^2}{3\hbar^2} |\vec{d_{ab}}|$$
+$$A=\frac{4\omega_{ba}^3}{3\hbar c^3} |\vec{d_{ab}}|^2$$
+\section{Adiabatic evolution}
+\subsection{Adiabatic approximation}
+\begin{thm}
+If a hamiltonian $H$ is changed slowly for $0\leq t\leq T$ then $\ket{\psi_n(0)}$ approximately evolves into $\ket{\psi_n(T)}$.
+\end{thm}
+\noindent The idea is straightforward, we take the coupled differential equation for a time-dependent system and make the coupled variables the error term. More precisely you should arrive at
+$$i\hbar \dot{c_k}=\left(E_k-i\hbar \braket{\psi_k}{\dot{\psi_k}}\right)c_k-i\hbar \sum_{n\neq k} \frac{\dot{H}_{kn}}{E_n-E_k}c_n$$
+If we can ignore the summation, then we achieve the Adiabatic approximation
+\begin{equation}
+\boxed{
+c_k(t) = c_k (0) e^{i\theta_k (t)} e^{i\gamma_k(t)}}
+\end{equation}
+\begin{equation}
+\boxed{
+\theta_k = -\frac{1}{\hbar} \int_0^t E_k(t') dt'}
+\end{equation}
+\begin{equation}
+\boxed{
+\gamma_k(t) = \int_0^t i\braket{\psi_k}{\dot{\psi_k}}dt'}
+\end{equation}
+$\theta$ is the dynamical phase while $\gamma$ is the geometric phase or Berry phase which is independent of $\hbar$ and real. We note that for closed paths traced out by a spatial parameterization (which depend on time) of $H$, then $$\gamma_n=\oint i\braket{\psi_n}{\vec{\nabla}_{\vec{R}} |\psi_n}\cdot d\vec{R}$$
+\\The validity condition for the adiabatic approx. can be achieved by some fudging as $\displaystyle \hbar |\dot{H_{mn}}| \ll \min_{t} [\Delta E_{mn}]^2$.
+\section{Scattering}
+\subsection{Definitions}
+The \emph{scattering cross section} is defined as the ratio of total number of scattered particles (per unit time) to the flux of incoming particles. In other words $$\sigma = \frac{\frac{dN_{scat}}{dt}}{\frac{d^2N_{in}}{dAdt}}$$
+We can sort of imagine this as the area which actually contributes to the scattering.\\
+The \emph{differential cross section} models the dependence of $\sigma$ on $\Omega$ as $\frac{d\sigma}{d\Omega} (\theta, \phi)$ since it is sometimes easier to do scattering measurements at a solid angle $\Omega$. We can easily obtain $\sigma$ through
+$$\sigma = \int d\Omega \frac{d\sigma}{d\Omega}$$\\
+For potentials that go to $0$ at $\pm \infty$ we have plane waves far away. For example in 1D a wave coming from the left scattering near $x=0$ will have $\psi(x\ll 0)=e^{ikx}+Re^{-ikx}$ and $\psi(x\gg 0) =Te^{ikx}$ where probability conservation gives $|R|^2+|T|^2=1$.\\
+In 3D, we have that the general solution for a scattered w.f. assuming $V\rightarrow 0$ for large $r$ is 
+$$\psi_{\text{scat}}=\frac{f(\theta, \phi)}{r}e^{ikr-\frac{iEt}{\hbar}}$$
+so the problem of finding how $e^{ikz}$ scatters reduces to solving the time-independent Schrodinger equation with boundary condition $$\psi(r\rightarrow \infty)=e^{ikz}+\frac{f(\theta,\phi)}{r}e^{ikr}$$
+Through some calculations of the probability flux $\vec{S}$ we get that 
+\begin{equation}
+\boxed{
+|f(\theta, \phi)|^2=\frac{d\sigma}{d\Omega}
+}
+\end{equation}
+\subsection{Born Approximation}
+Through the theory of Fourier Transforms we can inverse the Schrodinger equation to get an integral formulation
+$$\ket{\psi} = \ket{\psi_0} - \frac{2m}{\hbar^2}\int d^3r \frac{e^{ikr}}{4\pi r} e^{-i\frac{\vec{r}\cdot \vec{p}}{\hbar}}V\ket{\psi}$$
+Where $\ket{\psi_0}$ is any free-particle solution. By successive substitution, we get the \emph{Born Approximation}, which to the first order for $\psi_0(\vec r) = e^{ikz}$
+$$\boxed{\psi(\vec r) =\psi_0(\vec r) -\frac{2m}{\hbar^2}\int d^3r' e^{ikz'} \frac{e^{ik|\vec r-\vec r'|}}{4\pi |\vec r - \vec r'|}V(r')}$$
+If we assume the potential is insignificant for large $r$ then we have $r\gg r'$ for the points which contribute to the integral at large $r$. So we let $|r-r'|\approx r-\hat r \cdot \vec r'$, $\vec k = k\hat r$, and $\vec k' =k\hat z$ to get an approximation for the scattered solution in the form of (17)
+$$\psi_{\text{scat}} (\vec r) \approx \left(-\frac{2m}{\hbar^2}\int d^3 \vec r' e^{i(\vec k' - \vec k)\cdot \vec r'}\frac{V(\vec r)}{4\pi}\right)\frac{e^{ikr}}{r}$$ 
+$$f_1(\theta, \phi) = -\frac{2m}{\hbar^2}\int d^3 \vec r' e^{i(\vec k' - \vec k)\cdot \vec r'}\frac{V(\vec r)}{4\pi} = -\frac{m}{2\pi \hbar^2} \widetilde{V}(\vec k'- 	\vec k)$$
+For central potential we get
+$$\widetilde{V} (\vec q) = \frac{4\pi}{q} \int_0^{\infty} dr\  rV(r) \sin(qr)\qquad \vec q = \vec k' -\vec k \qquad q =2k\sin\frac{\theta}{2}$$
+For the Yukawa potential $V(r)= -\beta e^{-\mu r}/r$ we have $f_1(\theta) = -\frac{2m\beta^2}{\hbar^2(\mu^2+q^2)}$ and plugging in $\beta = -eQ$ recovers Rutherford scattering. 
+\subsection{Partial waves}
+We will also assume a central potential here and the condition that $\lim_{r\rightarrow\infty} r^2V(r)=0$. We instead solve for the radial components of the wavefunction given its expansion using the Legendre polynomials 
+$$\psi (r, \theta) = \sum_{l=0}^{\infty} R_l (r) P_l (\cos \theta)$$
+We instead solve for $u_l(r) = rR_l(r)$ then the Schrodinger equation turns into
+$$-u_l'' +V_{\text{eff}} u_l = k^2u_l \qquad V_{\text{eff}} = \frac{2mV}{\hbar^2} + \frac{l(l+1)}{r^2}$$
+The condition at infinity mentioned earlier allows us to approximate for large $r$,  $V_{\text{eff}}=\frac{l(l+1)}{r^2}$
+which leads to the spherical Bessel functions. With a few more successive large $r$ approximations we can arrive at this expansion for $f$
+$$f(\theta) = \sum_{l\geq 0} (2l+1)a_l P_l(\cos\theta)$$
+which leads to
+$$\sigma = 4\pi \sum_{l\geq 0 } (2l+1)|a_l|^2$$
+Now all we have to do is calculate $a_l$. We introduce the notion of phase shifts to make this a little easier 
+$$a_l = \frac{2e^{2i\delta_l} - 1}{2ik} = \frac{e^{i\delta_l}}{k}\sin \delta_l $$
+$$f(\theta) =\frac{1}{k} \sum_l (2l+1)P_l (\cos \theta)e^{i\delta} \sin(\delta_l)$$
+$$\sigma = \frac{4\pi}{k^2}\sum_l (2l+1)\sin^2 (\delta_l)$$
+It is easy to verify the Optical Theorem, $\frac{4\pi}{k} \text{Im} f(0) =\sigma$, and partial wave unitarity, $\sigma_l \leq \frac{4\pi}{k^2} (2l+1)$ afterwards. Calculating $\delta_l$ is done by comparing the phases between the incoming wave and the asymptotic scattered wave. The following formulae are useful for such a situation
+$$R_{l} (r) = A_l j_l (kr) + B_l n_l (kr)$$
+$$R_{l} (r\rightarrow \infty) = \frac{1}{kr} [A_l \sin (kr-\frac{l\pi}{2}) - B_l \cos (kr-\frac{l\pi}{2})]=\frac{\sqrt{A_l^2+B_l^2}}{kr} \left[\sin\left(kr-\frac{l\pi}{2}+\delta l \right)\right] $$
+$$\delta_l =\tan^{-1} \left(-\frac{B_l}{A_l}\right)$$
+$$j_l(x) = (-x)^l \left(\frac{1}{x} \frac{d}{dx}\right)^l \frac{\sin x}{x}\qquad n_l(x) = -(-x)^l \left(\frac{1}{x} \frac{d}{dx}\right)^l \frac{\cos x}{x}$$
+
+\section{Partial Measurement} 
+\subsection{Review}
+\textbf{One system:} States $\ket{\psi} \in V$ for some vector space $V$ and any Hermitian operator can be expanded as $\hat A = \sum \lambda_i \ket{v_i}\bra{v_i}$. Time evolution can be calculated as $\ket{\psi(t)} = \mathcal{U}\ket{\psi(0)}$ or solving the Heisenberg picture $i\hbar \frac{\partial}{\partial t} \hat A_H = [\hat A_H, H_H]$, and $\hat A_H (t) = \mathcal{U}^{\dagger} A_H (0) \mathcal{U}$.\\ \\
+\textbf{Two systems:} $\ket{\psi} \in V=V_1 \otimes V_2$. Local observables are of the form $\hat A \otimes I+I \otimes \hat B$ but we may have interaction in general.	We can always write the state in terms of one operator basis as follows 
+$$\ket{\psi} = \sum \sqrt{p_i} \ket{v_i} \otimes \ket{w_i}$$
+where the $\ket{w_i}$ are unit vectors so $\sum p_i = 1$. Measuring on the first state collapses the entire state to $\ket{v_i}\otimes \ket{w_i}$ with probability $p_i$. In a non-interacting picture we have Hamiltonian $H=H_1 \otimes I + I \otimes H_2$ with $\mathcal{U} = e^{-\frac{iH_1t}{\hbar}} \otimes e^{-\frac{iH_2t}{\hbar}}$.\\ \\
+\subsection{What's wrong with partial measurement?}
+Suppose we have a state
+$$\ket{\psi} =\frac{\ket{\vec n}\otimes \ket{-\vec n} -\ket{-\vec n} \otimes \ket{\vec n}}{\sqrt{2}}$$
+There is no elegant way to describe the state of the second particle since after a measurement on the first, we are left with an ensemble of states $\left\{ \left(\frac{1}{2}, \ket{\vec n} \right), \left(\frac{1}{2}, \ket{-\vec n} \right) \right\}$. Note that the system is entangled and it doesn't make sense to say the state of the second particle is $\ket{\vec{n}} \pm \ket{-\vec{n}}$. We also note that the ensembles aren't unique which does not bode well with the theory we've developed thus far but necessary otherwise instant transmission of messages would occur.
+\subsection{Density operators}
+The intuition behind a density operator, $\rho$, comes from considering the expectation of an operator $\hat A$ over an ensemble
+$$\sum p_a \bra{\psi_a} \hat A \ket{\psi_a} = p_a \text{tr}[\bra{\psi_a} \hat A \ket{\psi_a}]=\text{tr}\left[\hat A \sum p_a\bra{\psi_a}\ket{\psi_a}\right]=\text{tr}[\hat A \rho]$$
+$$\rho = \sum p_a \ket{\psi_a}\bra{\psi_a}$$
+Note that this is different from an expansion of an operator with respect to its eigenvalues! A pure state is a density matrix of the form $\ket{\psi}\bra{\psi}$, the pure state for spin 1/2 is 
+$$\ket{\vec n}\bra{\vec n}=\frac{I+\vec n \cdot \vec \sigma}{2}$$
+A maximally mixed state, on the contrary, is of the form
+$$\rho = \frac{1}{d}\sum \ket{v_i}\bra{v_i} = \frac{I}{d}$$
+where we chose some orthonormal basis. A density operator can have multiple decompositions so we can't assume anything about the probabilities $p_a$ nor the relationships between the state $\ket{\psi_a}$. The density operator for a thermal state is given by 
+$$\rho = \frac{\sum e^{-\beta E_i} \ket{i}\bra{i}}{\sum e^{-\beta E_i}}$$
+\subsubsection{Properties}
+Any matrix $\rho$ is a density matrix iff $\text{tr} \rho = 1$ and $\bra{\psi}\rho\ket{\psi}\geq 0$ for all $\ket{\psi}$. In the forward direction, the number of states in the ensemble can be taken to be the rank of $\rho$. Some methods of testing whether a hermitian matrix $A$ is positive definite or not is by checking whether all the eigenvalues are nonnegative or it can be factored into $A=B^{\dagger} B$. As a result we can show the set of valid $2 \times 2$ density matrices are of the form 
+$$\frac{I+\vec a \cdot \vec \sigma}{2}: |\vec a|\leq 1$$
+\subsection{Density matrix dynamics}
+\subsubsection{Evolution}
+From easy substitutions we can verify that the $\rho$ evolves according to $$i\hbar \frac{\partial}{\partial t} \rho = [H, \rho]$$
+but also $\mathcal{U}\rho \mathcal{U}^{\dagger}$ if we know how it starts out.
+\subsubsection{Measurement}
+Since $\rho$ is Hermitian, it corresponds to an observable. If we use an orthonormal basis, we collapse into the state $\ket{v_i}\bra{v_i}$ with probability $\bra{v_i} \rho \ket{v_i}$.
+\subsubsection{Decoherence}
+Decoherence involves random unitary transformations which cause a density matrix to be mapped $\rho \rightarrow \sum p_a \mathcal{U}\rho \mathcal{U}^{\dagger}$ which will alter the density matrix, in a way that could result in loss of information. 
+\section{Identical particles}
+\subsection{Fermions and Bosons}
+We've modeled distinguishable particles as states that are a member of a tensor product space with no restrictions. However with distinguishable particles we require $|\psi(\vec r_1, \vec r_2)| = |\psi(\vec r_2, \vec r_1)|$ which leads to the follow subspaces
+$$\text{Sym}^2 V = \{\ket{\psi}\in V \otimes V : F\ket{\psi} =\ket{\psi}\}$$
+$$\text{Anti}^2 V = \{\ket{\psi}\in V \otimes V : F\ket{\psi} =-\ket{\psi}\}$$
+where $F(\ket{a}\otimes\ket{b})=\ket{b}\otimes\ket{a}$.
+The \emph{spin-statistics theorem} states that the former, \emph{bosons}, encompass particles with integer spin while the latter, \emph{fermions}, encompass particles with half-integer spin. These subspaces comprise $V\otimes V $ but this is not true for higher dimensions. A nice choice of basis for the symmetric states is $$\ket{\alpha}\otimes\ket{\alpha} \qquad \frac{\ket{\alpha}\otimes\ket{\beta}+\ket{\beta}\otimes\ket{\alpha}}{\sqrt{2}}$$
+and for the anti-symmetric states
+$$\frac{\ket{\alpha}\otimes\ket{\beta}-\ket{\beta}\otimes\ket{\alpha}}{\sqrt{2}}$$
+\subsection{$N$ particles}
+$$\ket{\psi_{\text{sym}}} = \mathcal{N} \sum_{\pi} \ket{\alpha_{\pi(1)}}\otimes \cdots \ket{\alpha_{\pi(N)}}$$
+$$\ket{\psi_{\text{anti}}} = \frac{1}{N!}\sum_{\pi} \text{sgn}(\pi) \ket{\alpha_{\pi(1)}}\otimes \cdots \ket{\alpha_{\pi(N)}}$$
+The spatial wavefunction for the latter can be computed via a determinant.
+\subsection{Non-interacting particles}
+\subsubsection{Distinguishable particles}
+Since the Hamiltonian acts on each particle we get that the energy for $\ket{\alpha_1}\otimes \cdots \otimes \ket{\alpha_N}$ is $E_{\alpha_1} + \cdots + E_{\alpha_N}$ and there could be up to $N!$ degeneracy.
+\subsubsection{Bosons}
+The first excited state has an energy of $(N-1)E_0 + E_1$ but there is no degeneracy since we add all the states with a $1$ in a slot. In general, this accounts for the entire spectrum and eliminates the degeneracy. 
+\subsubsection{Fermions}
+We can't have two slots having the same value in the tensor product so we get that the ground state energy is $E_0+E_1+\cdots E_{N-1}$. We generate higher energy by adding one then removing a lower energy. In general we don't have degeneracy unless one existed in the single particle spectrum.
+\subsubsection{Composite particles}
+This applies to particles which have a spatial component AND a spin component. In general you would have to look at a coupled swap operator i.e. $F^{12:34}$ and split it up as a product. This leads us into seeing 
+$$\text{Anti}^2(V\otimes W)=(\text{Sym}^2 V\otimes \text{Anti}^2 W)\oplus (\text{Anti}^2 V\otimes \text{Sym}^2 W)$$
+$$\text{Sym}^2(V\otimes W)=(\text{Sym}^2 V\otimes \text{Sym}^2 W)\oplus (\text{Anti}^2 V\otimes \text{Anti}^2 W)$$
+\section{Degenerate Fermi Gas}
+\subsection{Trapped electron gas}
+We note that for a particle entrapped in a $L\times L\times L$ box, we let $\vec k = \frac{2\pi}{L}\vec n$ then we have eigenstates of the form 
+$$\psi(\vec r) = \frac{e^{i\vec k\cdot \vec r}}{L^{3/2}}$$
+$$E_{\vec k} = \frac{\hbar^2k^2}{2m}=\frac{\hbar^2}{2m} \left(\frac{2\pi}{L}\right)^2 n^2$$ 
+So that we have one wavevector per $(2\pi/L)^3$ volume. For an fermion system i.e. an electron gas, this means that $N$ electrons will take the lowest $N/2$ energies since we will account for both spatial and spin components. We now look at the highest $k$ value occupied i.e. $k_F$ and notice that we are approximately filling up a sphere in $k-$space.
+$$\frac{4}{3}\pi k_F^3 =\left(\frac{2\pi}{L}\right)^3\left(\frac{N}{2}\right)$$
+$$k_F=(3\pi^2 n)^{1/3}$$
+$$E_{F} = \frac{\hbar^2k_F^2}{2m}$$
+where $E_F$ is the \emph{Fermi energy} and denotes how much energy each electron adds to the system at level $k_F$. Now let us look at how much energy is stored and the resulting degeneracy pressure
+$$E=\int_0^{k_F} dk4\pi k^2 \cdot 2\cdot \left(\frac{L}{2\pi}\right)^3\cdot \frac{\hbar^2 k^2}{2m}=\frac{1}{5}\cdot 4\pi \cdot 2\cdot \left(\frac{L}{2\pi}\right)^3\cdot \frac{\hbar^2 k_F^5}{2m} = \frac{3}{5} NE_F$$
+$$P=-\frac{\partial E}{\partial V} = \frac{2}{5}nE_F =\frac{2}{3}\frac{E}{V}$$
+\subsection{White dwarves}
+Electron degeneracy pressure helps stabilize stars before they are able to collapse by working against gravitational energy. We will let $N$ be the number of nucleons (protons + neutrons) which have a rough mass of $m_p$, and $f$ be the fraction of electrons per nucleon so that the number of protons and electrons is $fN$ and neutrons $(1-f)N$
+$$E_{\text{grav}}(R) = \int_0^R -\frac{G(\frac{4}{3}\pi r^3\rho)(4\pi r^2 \rho dr)}{r}= -\frac{3}{5} \frac{GM^2}{R}=-\frac{\kappa N^2}{R}$$  
+$$E_{\text{degen}} =\left(\hbar^2 f^{5/3} \left(\frac{3}{10}\right)\left(\frac{9\pi}{4}\right)^{2/3}\right)\frac{N^{5/3}}{m_e R^2}=\frac{\lambda N^{5/3}}{m_e R^2}$$
+Doing the derivative calculations gives us
+$$R=\frac{2\lambda}{m_e \kappa}N^{-1/3} $$
+This doesn't work for large $N$ as the density goes to infinity. With relativity, we use $E\approx \hbar c|\vec k|$ and we get
+$$E_{\text{degen}}=\frac{V\hbar c}{4\pi^2} k_F^4=\kappa'\frac{N^{4/3}}{R}\qquad \kappa'=\frac{3}{4}\left(\frac{9\pi}{4}\right)^{1/3}f^{4/3}\hbar c$$
+$$E_{\text{tot}}=\frac{\kappa'N^{4/3}-\kappa N^2}{R}$$
+Note that a limit on the mass, called the Chandrasekhar limit, can be derived from relativistic theory and denotes the maximum allowed mass for the white dwarf to be stable.
+\section{Charged particles in a magnetic field}
+\subsection{Canonical quantization}
+Recall from classical mechanics that given a hamiltonian of the form $\mathcal{H}(x_i, p_i)$ we have
+$$\dot x_i = \frac{\partial \mathcal H}{\partial p_i} \qquad \dot p_i = - \frac{\partial \mathcal H}{\partial x_i}$$
+which are equivalent to Newton's Third Law. Note that if $\mathcal H=\frac{\vec p^2}{2m}+V(\vec x)$ then we get what we would expect, $m\ddot{\vec{x}} = -\nabla V$. We can use this method of \emph{canonical quantization} to develop a Schrodinger equation for charged particles in a magnetic field where the classical equation is given by
+$$m\frac{d^2 x}{dt^2} = q\left(\vec E + \frac{\vec v}{c} \times \vec B\right)$$
+It can be verified that the canonical quantization of this leads to
+$$\mathcal H =\frac{1}{2m}\left(\vec p -\frac{q}{c}\vec A\right)^2+q\phi$$
+$$\vec p = m\dot{\vec x}+\frac{q}{c} \vec A$$
+$$\vec B=\nabla \times \vec A \qquad \vec E = -\frac{1}{c} \frac{\partial \vec A}{\partial t} - \nabla \phi$$
+We also have Gauge invariance under the transformations $\vec A'=\vec A-\nabla f $ and $ \phi' = \phi +\frac{1}{c}\frac{\partial f}{\partial t}$.\\
+Taking $\vec p \rightarrow -i\hbar \nabla$ gives us the quantum form of the hamiltonian
+$$H=\frac{1}{2m}\left(-i\hbar \nabla -\frac{q}{c} \vec A\right)^2+q\phi$$
+which together with $i\hbar \frac{\partial \psi}{\partial t} =H\psi$ gives us the Schrodinger equation. Note that this cannot be expressed in terms of $\vec E$ and $\vec B$. We have that probabilities are guage invariant as the wavefunction transforms into
+$$\psi'(\vec x,t) = \exp \left(\frac{-iq}{\hbar c} f(\vec x, t)\right) \psi(\vec x, t)$$
+\subsection{Landau problem}
+Recall from classical physics that under a constant magnetic field $B=B_0 \hat z$ and $\vec E = 0$ we have circular motion with frequency
+$$\omega_L =\frac{qB}{mc}$$
+Since in the quantum variant, we deal with $\vec A$ we have several gauges to choose from such that $\nabla \times A =B_0 \hat z$. We will use the following $$\vec A =\frac{B_0}{2}(x \hat y - y \hat x)$$
+which turns the hamiltonian into
+$$H=\frac{1}{2m}(p_1^2+p_2^2+p_3^2) + \frac{1}{2}m\omega^2 (x_1^2+x_2^2)-\omega L_3 \qquad \omega = \frac{1}{2}\omega_L$$
+We can actually eliminate the $p_3$ dependence since $[p_3, H]=0$ so we will restrict motion to the $x-y$ plane. Using the ladder operations along with $a_{\pm} = \frac{1}{\sqrt{2}} (a_1 \mp ia_2)$ we can express the system as
+$$L_3 = \hbar(a_+^{\dagger}a_+ -a_-^{\dagger}a_-)$$
+$$H=\hbar\omega_L \left(a_-^{\dagger}a_-+\frac{1}{2}\right)$$
+So if we have a number operator $\mathcal N_{\pm} = a_{\pm}^{\dagger} a_{\pm}$ such that $\mathcal N_{\pm} \ket{n_+,n_-} = n_{\pm}\ket{n_+, n_-}$ we get the following result
+$$E=\hbar \omega_L \left(n_-+\frac{1}{2}\right)$$
+$$L=\hbar(n_+ - n_-)$$
+Note that there exists infinite degeneracy in $E$. Specifically the tower of degeneracy starts at angular momentum $-n_-\hbar$ and grows in steps of $\hbar$.
+\\If we use the Landauge gauge $\vec A = -B_0y \hat x $
+$$H=\frac{1}{2m} \left(p_x+\frac{qB}{c} y\right)^2+\frac{1}{2m} p_y^2$$
+Since $[H, p_x]=0$ we can transform this into 
+$$H=\frac{p_y^2}{2m}+\frac{1}{2}m\left(\frac{qB}{mc}\right)^2\left(y+\frac{\hbar k_x c}{qB}\right)^2$$
+so we get Harmonic Oscillator solutions with the following frequencies and offset
+$$\omega = \omega_L \qquad y_0 =-\frac{\hbar k_x c}{qB}=-l_0^2 k_x$$
+And so the energies and wavefunctions are
+$$E_{k_x, n_y} = \hbar \omega_L (n_y+1/2)$$
+$$\psi_{k_x, n_y} = e^{ik_x x}l_0^{-1/4} \phi_{n_y} \left(\frac{y-y_0}{l_0}\right)$$
+The infinite degeneracy is also apparent here, and since we used a different set of basis the behavior we see is also quite different.
+\subsection{de Haas-van Alphen effect}
+Let us impose boundary conditions on the Landau problem, specifically entrap the particle in a $L\times W$ box so that
+$$k_x =\frac{2\pi}{W} n_x$$
+$$0<y_0<L \Rightarrow -\frac{WLqB}{2\pi \hbar c} < n_x < 0$$
+So the amount of degeneracy is finite
+$$D=\frac{WLqB}{hc}=\frac{BA}{hc/q}=\frac{\Phi}{\Phi_0}$$
+Next let's calculate the induced magnetic moment
+$$E=\hbar \omega_L (n+1/2) = \frac{\hbar eB}{2m_e c} (2n+1) = \mu_B B (2n+1) \qquad \mu_B = \frac{e\hbar}{2m_e c}$$
+$$\mu_I = -\frac{\partial E}{\partial B} = -(2n+1)\mu_B$$
+So the orbit opposes the field and that higher LLs cause larger oscillations. Note that as $B$ increases the total energy increases but the amount of degeneracy also increases so there will be competition between gaining energy and moving to lower LLs, known as the \emph{de Haas-van Alphen effect}.\\
+If we let $\nu =N/D$ be the number of filled LLs we can say
+$$\nu = \frac{B_0}{B} \qquad B_0=\frac{N\phi_0}{A}$$
+so that the number of fully filled LLs is $\lfloor \nu \rfloor$. We now calculate energy
+$$E=\sum_{n=0}^{j-1} D\hbar \omega_L (n+1/2)+(N-jD)\hbar \omega_L (j+1/2)$$
+$$E=\frac{N\hbar \omega_l}{2} \left(\sum_{j=0}^{n-1}\frac{1}{\nu} (2n+1) +  (1-\frac{j}{\nu}) (2j+1)\right)$$
+$$E=N\mu_B B_0 \left(\frac{2j+1}{\nu}-\frac{j(j+1)}{\nu^2}\right)$$
+For integer $\nu$ we get $E=N\mu_B B_0$ and there is an oscillation/cusp there as well. We have that the induced magnetism is
+$$M=-\frac{1}{A} \frac{\partial E}{\partial B} = -n\mu_B \left((2j+1)-\frac{1}{\mu} 2j(j+1)\right)$$
+which jumps to a positive value once a new Landau level opens up but decreases as the new Landau level fills.
+\subsection{Aharonov-Bohm effect}
+Although $\vec A$ is not an observable, it does have an effect even in a situation where $\vec B = 0$. In the region outside a solenoid this happens but the vector potential
+$$\vec A = \frac{\Phi}{2\pi r} \hat \phi$$
+If we factor out a phase from the wavefunction
+$$g(\vec r, C) =\frac{e}{\hbar c}\int_C^{\vec r}\vec {dl}\cdot \vec A$$
+$$\psi(\vec r, t) = \exp(ig)\psi_0 (\vec r, t)$$
+we see from plugging into the S.E. that $\psi_0$ obeys the free particle solution so all the influences from the vector potential is contained in $g$. A calculation shows that the phase difference between two paths $C_1$, $C_2$ which originate and terminate at common points while enclosing the solenoid is
+$$g(C=C_1-C_2)=\frac{e}{\hbar c} \oint_C \vec{dl}\cdot \vec{A} = \frac{e\Phi}{\hbar c}$$.
+\subsection{Integer quantum hall effect}
+The standard hall effect occurs from turning on a magnetic field perpendicular to a sheet of electrons driven by an electric field within the sheet. The idea is that it generates a current perpendicular to the original velocity of the electrons i.e. of the E-field. In the quantum mechanical, bounded, analog we will set
+$$\vec E =-E_0\hat y \qquad \vec B = -B_0 \hat z$$
+$$\Phi = E_0 y \qquad \vec A = B_0y \hat x$$
+$$\Rightarrow \mathcal H = \frac{1}{2m}\left[\left(-ih\frac{\partial}{\partial x} - \frac{eB_0y}{c}\right)^2 -\hbar^2 \frac{\partial^2}{\partial y^2}\right] + eE_0y$$
+A similar calculation to that of the Landau problem shows that 
+$$E_n=\hbar \omega_L (n+1/2)+\hbar \omega_L (\alpha k-\alpha^2/2)$$
+$$\psi_n = 	\exp(ik\xi)\exp\left(-\frac{1}{2}|\eta-k+\alpha|^2\right)H_n(\eta-k+\alpha)$$
+$$\xi = x/l_0 \qquad \eta = y/l_0 \qquad \alpha = eE_0l_0/\hbar \omega_L \qquad l_0 = \sqrt{\hbar c/eB_0}$$
+We see that this is well localized around $\eta = k-\alpha$ which we can use to get the quanitzation rule $$k=L/l_0N=(2\pi l_0/W)m\qquad 0\leq m \leq \frac{LW}{2\pi\l_0^2}+\frac{\alpha W}{\pi l_0}$$
+We see that there is a similarity with the classical Hall effect in that there is a localized non-zero y-momentum. Calculating a relationship for the hall resistance we get $$\frac{1}{R_H} = \frac{Ne^2}{\hbar}$$
+where $N$ is the number of filled LLs.
+
+\section{Band Structure}
+\subsection{Bloch's theorem}
+A solid can be modeled as a periodic potential caused by the packed nuclei. It satisfies $V(x+a)=V(x)$ and \emph{Block's theorem} states that if $\psi$ solves the Schrodinger equation with such a potential, then we must have $$\psi(x+a) = e^{iKa}\psi(x)$$.
+In practical terms, the edge effects of a solid do not have much impact on the electrons deep inside so we can also impose the boundary condition $\psi(x+Na)=\psi(x)$ which results in $$K=\frac{2\pi n}{Na}$$
+The important thing to take away is that solving the Schrodinger equation in the range $[0, a)$ solves the Schrodinger equation everywhere which leads to the analysis of the band structure.
+\subsection{Dirac Comb}
+Suppose we had the periodic potential $$V(x) = \alpha\sum_{j=0}^{N-1}\delta(x-ja)$$
+As stated we can solve the delta function potential Schrodinger eq. in one period, then using Block's theorem to get the solution to the immediate left. The continuity and differentiability conditions at the junction gives us a restriction  the allowed energies and we get the following equation
+$$\cos(Ka)=\cos(ka) + \frac{m\alpha}{\hbar^2k} \sin(ka) \qquad k=\frac{\sqrt{2mE}}{\hbar}$$
+where the right side can be expressed as a function of $z=ka$ and $\beta = \frac{m\alpha a}{\hbar^2}$
+$$f(z)=\cos(z)+\beta\frac{\sin(z)}{z}$$
+We have energy bands where this function is in the allowed region of $\cos(Ka)$ i.e. $[-1,1]$ and gaps where it is not. When the gaps are smaller, electrons can move more freely.
+\section{Quantum computation}
+\subsection{Qubits and gates}
+\subsection{Grover's algorithm}
+\subsection{Simon's algorithm}
+\subsection{Shor's algorithm}
+\end{document}
