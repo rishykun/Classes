@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= title %></title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+	<center>
+		<h1><%= title %></h1>
+		<p>Provide login credentials below.</p> 
+		<% if (err) { %>
+		<p> Invalid username or password.  </p>
+		<% } %>
+		<form action="/login" method="post">
+			<div class="input">
+				<label>Username: </label><input type="text" name="user">
+			</div>
+			<br>
+			<div class="input">
+				<label>Password: </label><input type="text" name="password">
+			</div>
+			<br>
+			<div class="input"> 
+				<a href="/signup">Sign up</a>
+				<input type="submit" value="Login">
+			</div>
+		</form> 
+	</center>
+</body>
+</html>

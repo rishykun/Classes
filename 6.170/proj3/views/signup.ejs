@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= title %></title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+	<center>
+		<h1><%= title %></h1>
+		<p>Provide a username and password below.</p> 
+		<% if (err) { %>
+		<p> Username already taken, try a different one.  </p>
+		<% } %>
+		<form action="/signup" method="post">
+			<div class="input">
+				<label>Username: </label><input type="text" name="user">
+			</div>
+			<br>
+			<div class="input">
+				<label>Password: </label><input type="text" name="password">
+			</div>
+			<br>
+			<div class="input"> 
+				<input type="submit" value="Sign up!">
+			</div>
+		</form> 
+	</center>
+</body>
+</html>

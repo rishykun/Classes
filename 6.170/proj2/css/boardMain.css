@@ -1,0 +1,20 @@
+#game_board {
+	width: 500px;
+	height: 500px;
+	border-style:solid;
+	border-color:black;
+	margin:auto;
+/*	display:inline-block;*/
+}
+
+.startImages {
+	display:inline-block;
+	width:450px;
+	float:left;
+}
+
+.startImg {
+	width:150px;
+	height:150px;
+	padding:15px;
+}

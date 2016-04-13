@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= title %></title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<link rel='stylesheet' href='/stylesheets/tweets.css' />
+</head>
+<body>
+	<center>
+		<h1><%= title %></h1>
+
+		<form action="/users/logout" method="post">
+			<label>Welcome <%= currentUser %>! </label><input type="submit" value="Log out"> 
+		</form>
+		<br>
+		<form action="/" method="get">
+			<input type="submit" value="Home (All tweets)"> 
+		</form>
+		<br>
+		<form action= <%= "/users/"+currentUser+"/feed" %> method="get">
+			<input type="submit" value="My Feed (Followed tweets)"> 
+		</form>
+		<br>
+		<form action= <%= "/users/"+currentUser+"/addTweet" %> method="post">
+			<label>Post a tweet: </label><input type="text" name="tweet"> 
+		</form>
+	</center>
+	<h1> 
+		My Tweets
+	</h1>
+	<% tweets.forEach(function(tweet){  %>
+	<li>
+		<h4>  <%= tweet.tweet %> @<i><%= tweet.author.username %> 
+		</i>
+			<form class="inline-button" action=<%="/users/"+currentUser+"/removeTweet/"+tweet.id %> method="post" class="tweet"> <input type="submit" value="Delete"> </form> 
+		</h4>
+	</li>
+	<% }); %>
+</body>
+</html>

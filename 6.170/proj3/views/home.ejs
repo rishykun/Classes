@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= title %></title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<link rel='stylesheet' href='/stylesheets/tweets.css' />
+</head>
+<body>
+	<center>
+		<h1><%= title %></h1>
+
+		<form action="/users/logout" method="post">
+			<label>Welcome <%= currentUser %>! </label><input type="submit" value="Log out"> 
+		</form>
+		<br>
+		<form action= <%= "/users/"+currentUser %> method="get">
+			<input type="submit" value="My Tweets"> 
+		</form>
+		<br>
+		<form action= <%= "/users/"+currentUser+"/feed" %> method="get">
+			<input type="submit" value="My Feed (Followed tweets)"> 
+		</form>
+		<br>
+	</center>
+	<h1> All Tweets </h1>
+	<% registeredUsers.forEach(function(user) { %>
+	<h2> 
+		<%= user.username %>'s Tweets 
+		<% if (followedUsers.indexOf(user.username) < 0 && user.username !== currentUser) {%>
+		<form class="inline-button" action = <%= "/users/"+currentUser+"/follow/"+user.username %> method="post">
+			<input type="submit" value="Follow">
+		</form>
+		<% } %>
+	</h2> 
+	<% user.tweets.forEach(function(tweet) { %>
+	<h4> 
+		<li> 
+			<%= tweet.tweet %> @<i><%= tweet.author.username %></i>
+			<% if (currentUser !== tweet.author.username && currentUser != user.username){ %>
+			<form class="inline-button" action = <%= "/users/"+currentUser+"/addTweet/"+ tweet.id %> method="post">
+				<input type="submit" value="Retweet">
+			</form>
+			<% } %>
+		</li>
+	</h4>
+	<% }); %>
+	<% }); %>
+</body>
+</html>
